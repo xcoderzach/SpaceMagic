@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-program = require("commander")
+var program = require("commander")
+  , exec = require('child_process').exec
 
 program
   .version('0.0.1')
@@ -9,7 +10,11 @@ program
   .command('init <project>')
   .description('initialize a SpaceMagic project')
   .action(function(project) {
-     console.log(project)
+    console.log('cp -r ' + __dirname + '/../base/* ' + process.cwd())
+    child = exec('cp -r ' + __dirname + '/../base/* ' + process.cwd(), function() {
+      console.log(arguments)
+      
+    })
   })
 
 program

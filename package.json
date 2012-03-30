@@ -1,27 +1,26 @@
 {
-  "name": "SpaceMagic",
-  "description": "Real-Time Full Stack Web Framework",
-  "version": "0.0.1",
-  "author": "Mukari <dev@mukari.com>",
-  "dependencies": {
-  , "connect": "1.8.3"
+  "name": "SpaceMagic"
+, "description": "Real-Time Full Stack Web Framework"
+, "version": "0.0.1"
+, "author": "Mukari <dev@mukari.com>"
+, "dependencies": {
+    "connect": "1.8.3"
   , "socket.io": "0.8.7"
   , "mime": "1.2.4"
   , "mongolian": "0.1.17"
   , "underscore": "1.2.x"
   , "moment": "1.5.x"
+  , "live-document": "git://github.com/xcoderzach/LiveDocument.git"
+  , "live-view": "git://github.com/xcoderzach/LiveView.git"
+  , "live-controller": "git://github.com/xcoderzach/LiveController.git"
   , "connect-mongolian": "git://github.com/xcoderzach/connect-mongolian.git"
-  , "live-document": "git://github.com/xcoderzach/live-document.git"
-  , "live-view": "git://github.com/xcoderzach/live-view.git"
-  , "live-controller": "git://github.com/xcoderzach/live-controller.git"
-  },
-  "scripts": {
+  }
+, "scripts": {
     "start": "./bin/spacemagic.js server"
-  },
-  "devDependencies": {
-    "mocha": "0.13.x",
-    "zombie": "0.x.x",
-    "should": "0.3.x"
-  },
-  "engine": "node >= 0.6.0"
-}
+  }
+, "devDependencies": {
+    "mocha": "0.13.x"
+  , "zombie": "0.x.x"
+  , "should": "0.3.x"
+  }
+, "engine": "node >= 0.6.0" }

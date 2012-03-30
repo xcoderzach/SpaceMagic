@@ -4,17 +4,12 @@
   "version": "0.0.1",
   "author": "Mukari <dev@mukari.com>",
   "dependencies": {
-    "coffee-script": "1.1.3"
-  , "nib": "0.3.1"
   , "connect": "1.8.3"
-  , "stylus": "0.x.x"
   , "socket.io": "0.8.7"
   , "mime": "1.2.4"
   , "mongolian": "0.1.17"
-  , "underscore": "1.2.3"
-  , "passport": "x.x.x"
-  , "passport-local": "x.x.x"
-  , "stylus-blueprint": "x.x.x"
+  , "underscore": "1.2.x"
+  , "moment": "1.5.x"
   , "connect-mongolian": "git://github.com/xcoderzach/connect-mongolian.git"
   , "live-document": "git://github.com/xcoderzach/live-document.git"
   , "live-view": "git://github.com/xcoderzach/live-view.git"
@@ -28,5 +23,5 @@
     "zombie": "0.x.x",
     "should": "0.3.x"
   },
-  "engine": "node >= 0.4.1"
+  "engine": "node >= 0.6.0"
 }

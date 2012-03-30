@@ -17,7 +17,8 @@ program
   .description('run the SpaceMagic server')
   .option('-p, --port [port]', Number, 3000)
   .action(function(program) {
-    console.log(program.port)
+    var app = require("./lib/server")                                                                                                                                                            
+      .start(process.env.NODE_ENV || "development", program.port)
   })
 
 program.parse(process.argv)

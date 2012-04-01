@@ -23,7 +23,7 @@ describe("the generator", function() {
       done()
     })
   }) 
-  it("should recursivly copy directories", function(done) {
+  it("should copy directories and replace variables in files", function(done) {
     generator.copyAndReplace(__dirname + "/src/adir", __dirname + "/dest/adir", { projectName: "SpaceMagic" }, function() {
       fs.readFileSync(__dirname + "/dest/adir/file/test.js", 'utf8').should.equal("SpaceMagic\n")
       fs.readFileSync(__dirname + "/dest/adir/file/test2.js", 'utf8').should.equal("SpaceMagic\n")

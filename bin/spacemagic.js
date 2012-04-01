@@ -6,6 +6,12 @@ var program = require("commander")
   , fs = require('fs')
   , app = require("../lib/server")                                                                                                                                                            
 
+ 
+if(!process.env.NODE_ENV) {
+  process.env.NODE_ENV = "DEVELOPMENT"
+}
+ 
+
 program
   .version('0.0.1')
 
@@ -24,7 +30,7 @@ program
   .description('run the SpaceMagic server')
   .option('-p, --port [port]', Number, 3000)
   .action(function(program) {
-     app.start(process.env.NODE_ENV || "development", program.port, process.cwd())
+     app.start(program.port, process.cwd())
   })
 
 program.parse(process.argv)

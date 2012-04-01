@@ -7,13 +7,9 @@
     "connect": "1.8.3"
   , "socket.io": "0.8.7"
   , "commander": "0.x.x"
-  , "mime": "1.2.4"
   , "mongolian": "0.1.17"
   , "underscore": "1.2.x"
-  , "moment": "1.5.x"
-  , "live-document": "git://github.com/xcoderzach/LiveDocument.git"
-  , "live-view": "git://github.com/xcoderzach/LiveView.git"
-  , "live-controller": "git://github.com/xcoderzach/LiveController.git"
+  , "mu2": "x.x.x"
   , "connect-mongolian": "git://github.com/xcoderzach/connect-mongolian.git"
   }
 , "scripts": {

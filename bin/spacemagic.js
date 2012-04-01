@@ -10,7 +10,6 @@ program
   .command('init <project>')
   .description('initialize a SpaceMagic project')
   .action(function(project) {
-    console.log('cp -r ' + __dirname + '/../base/* ' + process.cwd())
     child = exec('cp -r ' + __dirname + '/../base/* ' + process.cwd(), function() {
       console.log(arguments)
       
@@ -23,7 +22,7 @@ program
   .option('-p, --port [port]', Number, 3000)
   .action(function(program) {
     var app = require("../lib/server")                                                                                                                                                            
-      .start(process.env.NODE_ENV || "development", program.port)
+      .start(process.env.NODE_ENV || "development", program.port, process.cwd())
   })
 
 program.parse(process.argv)

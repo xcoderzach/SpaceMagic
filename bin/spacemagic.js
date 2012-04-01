@@ -2,6 +2,9 @@
 
 var program = require("commander")
   , exec = require('child_process').exec
+  , generator = require('../lib/generators/generator')
+  , fs = require('fs')
+  , app = require("../lib/server")                                                                                                                                                            
 
 program
   .version('0.0.1')
@@ -9,11 +12,11 @@ program
 program
   .command('init <project>')
   .description('initialize a SpaceMagic project')
-  .action(function(project) {
-    child = exec('cp -r ' + __dirname + '/../base/* ' + process.cwd(), function() {
-      console.log(arguments)
-      
-    })
+  .action(function(project) { 
+    fs.mkdirSync(process.cwd() + "/" + project)
+    generator.copyAndReplace( __dirname + "/../lib/generators/new-project"
+                            , process.cwd() + "/" + project
+                            , { projectName: project })
   })
 
 program
@@ -21,8 +24,7 @@ program
   .description('run the SpaceMagic server')
   .option('-p, --port [port]', Number, 3000)
   .action(function(program) {
-    var app = require("../lib/server")                                                                                                                                                            
-      .start(process.env.NODE_ENV || "development", program.port, process.cwd())
+     app.start(process.env.NODE_ENV || "development", program.port, process.cwd())
   })
 
 program.parse(process.argv)

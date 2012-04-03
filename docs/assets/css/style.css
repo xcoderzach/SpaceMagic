@@ -1,0 +1,42 @@
+body {
+  padding-top: 30px;
+}
+
+.container  {
+}
+
+.row {
+  margin-left: 0px;
+}
+
+.toc {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.toc ul {
+margin: 0;
+}
+
+.toc li a{
+  color: black;
+  
+}
+
+#toc .H1 {
+  font-weight: bold;
+  text-decoration:underline;
+  margin: 15px 0px 0px 0px;
+  list-style-type: none;
+}
+
+#toc .H2 {
+  font-weight: normal;
+  list-style-type: none;
+  margin-left: 10px;
+}
+
+#toc .H3 {
+  margin-left: 20px;
+  list-style-type: circle;
+}

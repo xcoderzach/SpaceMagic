@@ -1,0 +1,20 @@
+{
+  "name": "runningPage"
+, "description": ""
+, "version": "0.0.0"
+, "author": ""
+, "dependencies": {
+    "underscore": "1.2.x"
+  , "moment": "1.5.x"
+  , "less": "x.x.x"
+  , "live-document": "git://github.com/xcoderzach/LiveDocument.git"
+  , "space-magic": "git://github.com/xcoderzach/SpaceMagic.git"
+  , "live-view": "git://github.com/xcoderzach/LiveView.git"
+  , "live-controller": "git://github.com/xcoderzach/LiveController.git"
+  , "asset-pipeline": "git://github.com/xcoderzach/AssetPipeline.git"
+  }
+, "devDependencies": {
+    "mocha": "0.13.x"
+  , "should": "0.3.x"
+  }
+, "engine": "node >= 0.6.0" }

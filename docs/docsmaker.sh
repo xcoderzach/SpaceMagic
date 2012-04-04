@@ -27,14 +27,12 @@ echo '
           <!--Sidebar content-->
         </div>
         <div class="span8">'>index.html
-curl https://raw.github.com/xcoderzach/SpaceMagic/master/docs/index.markdown >> allthedocs.md
+curl https://raw.github.com/xcoderzach/SpaceMagic/master/docs/index.markdown > allthedocs.md
 curl https://raw.github.com/xcoderzach/LiveView/develop/docs/api.md >> allthedocs.md
-curl https://raw.github.com/xcoderzach/LiveDocument/master/docs/index.md >> allthedocs.md
-curl https://raw.github.com/xcoderzach/LiveDocument/develop/docs/associations.md >> allthedocs.md
+curl https://raw.github.com/xcoderzach/LiveDocument/master/docs/associations.md >> allthedocs.md
 curl https://raw.github.com/xcoderzach/LiveDocument/master/docs/api.md >> allthedocs.md
-curl https://raw.github.com/xcoderzach/LiveController/develop/README.md >> allthedocs.md
 curl https://raw.github.com/xcoderzach/LiveController/develop/docs/api.md >> allthedocs.md
-marked allthedocs.md >> index.html
+marked --gfm allthedocs.md >> index.html
 echo '        </div>
       </div>
     </div> <!-- /container -->
@@ -60,6 +58,10 @@ echo '        </div>
     $(".toc").prepend("<h2>SpaceMagic</h2><br ><i class='icon-download'></i><a href='https://github.com/xcoderzach/SpaceMagic'>Git Repository</a>")}
     $(".toc").append("<ul id='toc'></ul>")
     var TOC = $("ul#toc");
+    $.each($("h2:contains(Table of Contents)"), function(i,e){
+      $(e).next.remove
+      $(e).remove
+    })
     $.each($("h1, h2, h3"), function(i, e) {
     var heading = $(e);
     var headingText = $(e).text();

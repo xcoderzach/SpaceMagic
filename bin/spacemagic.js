@@ -19,10 +19,14 @@ program
   .command('init <project>')
   .description('initialize a SpaceMagic project')
   .action(function(project) { 
+    console.log("Building new project + " + project) 
     fs.mkdirSync(process.cwd() + "/" + project)
     generator.copyAndReplace( __dirname + "/../lib/generators/new-project"
                             , process.cwd() + "/" + project
-                            , { projectName: project })
+                            , { projectName: project }
+                            , function() {
+                                console.log(project + " built successfully") 
+                              })
   })
 
 program

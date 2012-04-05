@@ -39,7 +39,7 @@ Next Steps
   * or dive into the API documentation
 
 High-level Overview
-===================
+-------------------
 
 SpaceMagic is an MV* framework. Its main components are:
 

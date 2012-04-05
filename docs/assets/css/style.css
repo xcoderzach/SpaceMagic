@@ -3,6 +3,7 @@ body {
 }
 
 .container  {
+  margin-left: 0px;
 }
 
 .row {
@@ -31,7 +32,7 @@ margin: 0;
 }
 
 #toc .H2 {
-  font-weight: normal;
+  font-weight: bold;
   list-style-type: none;
   margin-left: 10px;
 }

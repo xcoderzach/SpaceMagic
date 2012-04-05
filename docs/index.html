@@ -9,8 +9,8 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
-    <link href="assets/css/bootstrap.css" rel="stylesheet">
-    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -28,44 +28,18 @@
         <div class="span8">
 <h1>Welcome to SpaceMagic</h1>
 <p>  SpaceMagic is a full-stack javascript web development framework which allows
-you to build fast, real-time web applications.  SpaceMagic allows you to write only
+you to build fast, real-time web applications.  It allows you to write only
 one app and share it between the client and the server.
 
 </p>
-<h2>What does SpaceMagic do for me?</h2>
-<ul>
-<li><p>SpaceMagic&#39;s oodm (Observable Object Document Mapper), LiveDocument, spans
-the client and the server, allowing users to write database code once, and
-interact with it on both the server and the client.</p>
-</li>
-<li><p>LiveDocument automatically keeps clients notified of changes to any
-documents or collections of documents they query.  This makes writing
-real-time client updating code unnecesary.  The real-time just happens, all the
-time, everywhere.</p>
-</li>
-<li><p>SpaceMagic&#39;s templating layer, LiveView allows for truely logicless views.
-simply write your semantic HTML5 and it&#39;s already a template.</p>
-</li>
-<li><p>SpaceMagic&#39;s views automatically keep everything up-to-date with all of the
-incoming real-time changes.  However all updates are overrideable, giving
-you flexibility of when, what, and how everything get&#39;s updated.</p>
-</li>
-<li><p>SpaceMagic&#39;s assetPipeline provides minifying, cacheing, and compressing of
-static assets.  It also pushes updated versions of static assets when they
-change in development mode.  Saving you from constantly refreshing pages.</p>
-</li>
-<li><p>SpaceMagic provides a commonjs module loader on the client so you can reuse
-your own code between the client and the server.</p>
-</li>
-</ul>
-<h1>Installation</h1>
-<pre><code>mkdir my_project
-cd my_project
-npm install spacemagic
-space-magic init my_project</code></pre>
+<h2>Installation</h2>
+<pre><code>npm install -g spacemagic
+spacemagic init myProject
+cd myProject
+npm install</code></pre>
 <h2>Configure</h2>
 <p>  You need to have mongodb installed, if you don&#39;t, go here
-[<a href="http://www.mongodb.org/display/DOCS/Quickstart](MongoDB">http://www.mongodb.org/display/DOCS/Quickstart](MongoDB</a> QuickStart Guide)
+<a href="http://www.mongodb.org/display/DOCS/Quickstart">MongoDB QuickStart Guide</a>
 
 </p>
 <p>  If you&#39;re already running MongoDB on localhost on the default port, you&#39;re done.
@@ -73,38 +47,59 @@ But if you need to configure your database connection info goto the file:
 
 </p>
 <pre><code>vim config/database.js</code></pre>
-<h1>Next Steps</h1>
-<p>checkout our Basic Todo Tutorial
-or the Chat Tutorial
-or the Micro Blogging tutorial
-or checkout the Guides
-or dive into the API documentation
+<h2>Next Steps</h2>
+<ul>
+<li>Checkout our Basic Todo Tutorial</li>
+<li>or the Chat Tutorial</li>
+<li>or the Micro Blogging tutorial</li>
+<li>or checkout the Guides</li>
+<li>or dive into the API documentation</li>
+</ul>
+<h2>High-level Overview</h2>
+<p>SpaceMagic is an MV* framework. Its main components are:
 
 </p>
+<ul>
+<li><a href="https://github.com/xcoderzach/LiveView">LiveView</a> - A pure, semantic HTML-based templating language.</li>
+<li><a href="https://github.com/xcoderzach/LiveDocument">LiveDocument</a> - A real-time client-server isomorphic ODM.</li>
+<li><a href="https://github.com/xcoderzach/LiveController">LiveController</a> - A tiny, client-side, pushState router. </li>
+<li><a href="https://github.com/xcoderzach/AssetPipeline">AssetPipeline</a> - A static asset provider with support for minification, javascript modules, and caching.</li>
+</ul>
 <h1>LiveView API Documentation </h1>
-<h3>LiveView Constructor</h3>
-<h5>LiveView(template, data, callback, scope)</h5>
+<h2>LiveView</h2>
+<h5>LiveView(template, data[, scope])</h5>
 <p>Constructs a new live view from a template. The <code>template</code> may be a template
 url, css selector, or html.  <code>data</code> refers to the data with which the live view
-is initialized.  The <code>set</code> method is used to update the live view.  <code>scope</code> is
-an array of strings that describes the scope, the elements over which the live
-view can act, of the live view. If omitted, LiveView will assume the default
-scope, &quot;main.&quot;
+is initialized. <code>scope</code> is an array of strings that describe the scope of the 
+live view variables. If omitted, LiveView will assume the default scope, &quot;main.&quot;
 
 </p>
 <h3>changeTemplate</h3>
 <h5>LiveView.changeTemplate(template)</h5>
-<p>Changes the template used by the live view to the one specified.
-
+<p>Changes the template used by the live view to the one specified. This can be used to hotswap templates during development.
 </p>
+<h6>TODO: Make hotswapping possible</h6>
 <h3>find</h3>
 <h5>LiveView.find(selector)</h5>
-<p>Returns elements of a certain type from polymorphic subviews.
+<p>Returns elements that match selector. Finds elements in current view as well as elements in any polymorphic subviews.
 
 </p>
 <h3>set</h3>
 <h5>LiveView.set(name, value)</h5>
-<p>Sets the value or values of an element <code>name</code> to <code>value</code>.
+<h5>LiveView.set(JSONObject)</h5>
+<p>Sets the value or values of an element <code>name</code> to <code>value</code>. If a single object is passed, set each key in <code>JSONObject</code> to its value.
+
+</p>
+<pre><code class="html">&lt;div class=&quot;post&quot;&gt;&lt;/div&gt;</code></pre>
+<pre><code class="javascript">LiveView.set(&quot;post&quot;, &quot;An angry comment about your taste in movies.&quot;)</code></pre>
+<p>If live view was constructed with scopes, you can do the following:
+
+</p>
+<pre><code class="html">&lt;div class = &quot;title&quot;&gt;&lt;/div&gt;
+&lt;div class = &quot;postTitle&quot;&gt;&lt;/div&gt;</code></pre>
+<pre><code class="javascript">var view = new LiveView(&quot;template.html&quot;, {})
+view.set(&quot;title&quot;, &quot;Another post.&quot;)</code></pre>
+<p>This will set both .title and .postTitle, this can be used to disambiguate classes in subViews.
 
 </p>
 <h3>remove</h3>
@@ -118,25 +113,14 @@ scope, &quot;main.&quot;
 
 </p>
 <h3>attach</h3>
-<h5>LiveView.attach(element)</h5>
-<p>Attaches live view to a particular element.
-
-</p>
-<h3>attach</h3>
 <h5>LiveView.attach(container)</h5>
 <p>Attaches live view to a particular container.
 
 </p>
-<h3>LiveViewCollection Constructor</h3>
-<h5>LiveViewCollection(container, data, name, scope)</h5>
-<p>Constructs a new live view collection. Constructor requires a <code>container</code>
-within the template to contain the view, <code>data</code>, a name for the collection, and
-an optional <code>scope</code>.
-
-</p>
+<h2>LiveViewCollection</h2>
 <h3>showLoading</h3>
 <h5>LiveViewCollection.showLoading()</h5>
-<p>Appends a special loading element to the end of the collection if one exists.
+<p>Appends a special loading element to the end of the collection if any such element exists.
 
 </p>
 <h3>hideLoading</h3>
@@ -146,8 +130,7 @@ an optional <code>scope</code>.
 </p>
 <h3>get</h3>
 <h5>LiveViewCollection.get(id)</h5>
-<p>Returns the view at index <code>id</code>. If two arguments are used, function returns the
-first element with data where key arg1 === arg2
+<p>Returns the view at index <code>id</code> in the collection.
 
 </p>
 <h3>length</h3>
@@ -176,74 +159,8 @@ the live view collection.  Returns a new live view when completed.
 </p>
 <h3>append</h3>
 <h5>LiveViewCollection.append(data)</h5>
-<p>Inserts each of an array of views into the live view collection.
+<p>Inserts a view or each of an array of views into the live view collection.
 </p>
-<h1>LiveDocument Associations</h1>
-<p>  LiveDocument supports three types of associations
-many, one, and belongsTo.
-
-</p>
-<h2>One</h2>
-<p>  A <em>one</em> association defines a relationship where one document maps to one
-other document.
-
-</p>
-<pre><code class="javascript">// app/models/user.js
-module.exports = Document(&quot;User&quot;)
-  .key(&quot;name&quot;) 
-  .one(&quot;profile&quot;)
-// app/models/profile.js
-module.exports = Document(&quot;Profile&quot;)
-  .key(&quot;jobTitle&quot;) 
-  .one(&quot;user&quot;)</code></pre>
-<p>  To use this, you can just use the assoc method like this:
-
-</p>
-<pre><code class="javascript">var user = User.findOne(id)
-var profile = user.assoc(&quot;profile&quot;)</code></pre>
-<p>  The associated document returned can be used just like any other
-document and is not necessarily loaded.
-
-</p>
-<h2>Many</h2>
-<p>  A <em>many</em> association defines a relationship where a one document has 0 or
-more related documents.
-
-</p>
-<p>  To define a <em>many</em> association, you simply call the many method with the name
-of the association.
-
-</p>
-<pre><code class="javascript">// app/models/blog_post.js
-module.exports = Document(&quot;BlogPost&quot;)
-  .key(&quot;title&quot;)
-  .many(&quot;comments&quot;)
-// app/models/comment.js
-module.exports = Document(&quot;Comment&quot;)
-  .key(&quot;body&quot;)
-  .belongsTo(&quot;blogPost&quot;)</code></pre>
-<p>  Now to use the associations
-</p>
-<pre><code class="javascript">var post = BlogPost.findOne(id)
-var comments = post.assoc(&quot;comments&quot;)</code></pre>
-<p>  This will find the model with the name Comment and return the comments with
-a blogPostId equal to the blogPost&#39;s _id.  The comments can be interacted with
-like any other collection.  So you can do things that won&#39;t happen until they&#39;re
-loaded with the .loaded method.
-
-</p>
-<p>  Many associations can also map to <a href="">embedded</a> documents.
-
-</p>
-<h2>BelongsTo</h2>
-<p>  The document with the belongsTo association is the document which actually has the
-foreign key in it.  It can be used to access the document it belongs to exactly like
-the other two associations.  Using the blog post example from above, we can access
-the post to which a comment belongs like this:    
-
-</p>
-<pre><code class="javascript">var comment = Comment.findOne(id)
-var post = comment.assoc(&quot;blogPost&quot;)</code></pre>
 <h1>LiveDocument API</h1>
 <h2>Document Definition Methods</h2>
 <p>  Model Definition Methods are the methods that you use to define the schema
@@ -278,7 +195,7 @@ how to make your own custom validations, see the
 </p>
 <h3>timestamps</h3>
 <h4>Document.timestamps()</h4>
-<p>  The <code>timestamps</code> method will give your document createdAt and updatedAt
+<p>  The <code>timestamps</code> method will give your document <code>createdAt</code> and <code>updatedAt</code>
 timestamps.  The timestamps will be created and updated automatically.
 The format of a timestamp is a unix timestamp, specifically the result
 of calling <code>(new Date).getTime()</code>
@@ -292,7 +209,7 @@ of calling <code>(new Date).getTime()</code>
   .timestamps()</code></pre>
 <h3>getKey</h3>
 <h4>Document.getKey(name, watchFields, valueFn)</h4>
-<p>  The <code>getKey</code> method defines a dynamic key, whose value is determined by the
+<p>  The <code>getKey</code> method defines a dynamic key whose value is determined by the
 return value of valueFn.
 
 </p>
@@ -300,9 +217,10 @@ return value of valueFn.
 watchFields changes.
 
 </p>
-<p><code>valueFn</code>
-
-</p>
+<pre><code class="javascript">User = Document(&quot;User&quot;)
+  .getKey(&quot;fullName&quot;, [&quot;first&quot;, &quot;last&quot;], function () {
+    return this.get(&quot;first&quot;) + &quot; &quot; + this.get(&quot;last&quot;)
+  })</code></pre>
 <h3>setKey</h3>
 <h4>Document.setKey(name, fn)</h4>
 <p>  The setKey method allows you to define behavior when a key is set.
@@ -321,7 +239,7 @@ a user calls the <code>.set</code> method.
     this.set(&quot;last&quot;, name[1])
   })</code></pre>
 <h2>Document Hook Methods</h2>
-<p>  These methods registers a handler to be called before or after
+<p>  These methods register a handler to be called before or after
 some action is performed on a document.
 
 </p>
@@ -331,7 +249,7 @@ some action is performed on a document.
 <ul>
 <li><p><code>instance</code> - The instance of the document</p>
 </li>
-<li><p><code>done</code> - A function to call when your handler is finished.  If anything is
+<li><p><code>done</code> - A function to be called when your handler is finished.  If anything is
 passed to done in a before filter, the document will not save and whatever was
 passed to done will be emitted as the first argument to the <code>&quot;error&quot;</code> event.</p>
 </li>
@@ -399,13 +317,13 @@ called on the client.
 <p>  This is called after removing a document on the server.
 
 </p>
-<h2>Associations</h2>
+<h2>Document Association Methods</h2>
 <p>  Associations provide a way to model relationships between your documents.
 For example, <code>blogPosts</code> might have many <code>comments</code> and a <code>blogPost</code> might
 belongTo an <code>author</code> or an <code>author</code> might have one <code>profile</code>.
 
 </p>
-<p>  NOTE: A quick note about cyclic dependencies.  If two documents have each
+<p>  <strong>NOTE</strong>: A quick note about cyclic dependencies.  If two documents have each
 other as associations, i.e. one belongs to another, then we need to do
 the following:
 
@@ -513,7 +431,7 @@ module.exports = Document(&quot;Post&quot;)
 var post = Post.find({votes: { $gt: 100 })</code></pre>
 <h3>findOne</h3>
 <h4>Document.findOne(id[, callback])</h4>
-<p>  Find one takes in an _id, and finds a document with that id.  The document is
+<p>  <code>findOne</code> takes in an <code>_id</code>, and finds a document with that id.  The document is
 returned immediatly, however none of it&#39;s properties are actually set.  However
 you can, and should, pass it to the view immediatly.  The document will fire
 <a href="/document-events">events</a> as it&#39;s state changes (i.e. when it loads, or
@@ -535,8 +453,8 @@ var Post = require(&quot;./post&quot;)
 var post = Post.findOne(&quot;4f7580a64e822029b7000001&quot;)</code></pre>
 <h3>findByKey</h3>
 <h4>Document.findByKey(key, value[, callback])</h4>
-<p>Finds the document <code>key</code> equals <code>value</code>, there should
-only be one document where <code>key</code> equals <code>value</code>. i.e. value
+<p>Finds the document in which <code>key</code> equals <code>value</code>, there should
+only be one document where <code>key</code> equals <code>value</code>. i.e. <code>value</code>
 should be unique.
 
 </p>
@@ -564,41 +482,50 @@ var user = User.create({ name: &quot;Zach&quot;, email: &quot;x.coder.zach[At]gm
 var user = new User({ name: &quot;Zach&quot;, email: &quot;x.coder.zach[At]gmail.com&quot; })
 user.save()</code></pre>
 <h2>Document Instance Methods</h2>
-<p>  Now that you&#39;ve found or created document, and now you want to do things with it.
-
-</p>
-<p>  You can Define your own instance methods like so:
-</p>
-<pre><code class="javascript">  //Every type of document will get this method
-  Document.prototype.myMethod = function() {
-
-  }
-
-  //Just Posts will get this method
-  Post.prototype.myMethod = function() {
-
-  }</code></pre>
 <h3>constructor</h3>
-<h4>Document(jsonDocument[, options])</h4>
+<h4>Document(JSONDocument[, options])</h4>
+<p>Constructs a new document instance.
+
+</p>
+<p>Options:
+  <em> validate - defaults to <code>true</code>. Specifies whether to value the contents of the JSONDocument.
+  </em> noId - defaults to <code>false</code>. If <code>noId</code> is <code>true</code>, constructor does not generate an id.
+
+</p>
 <h3>set</h3>
 <h4>Document.prototype.set(properies[, options])</h4>
 <h4>Document.prototype.set(key, value[, options])</h4>
+<p>Sets the value of <code>key</code> to <code>value</code>. If the first parameter is an object, sets the value of each <code>key</code> in the document to its <code>value</code>.
+
+</p>
 <h3>get</h3>
 <h4>Document.prototype.get(key)</h4>
+<p>Gets the value of the <code>key</code>.
+
+</p>
 <h3>assoc</h3>
-<h4>Document.prototype.get(name[, callback])</h4>
+<h4>Document.prototype.assoc(name[, callback])</h4>
+<p>Returns associated document or collection. <code>callback</code> is called once association is loaded.
+
+</p>
 <h3>keys</h3>
 <h4>Document.prototype.keys()</h4>
-<p>  Returns a list of the keys this document has.
+<p>Returns a list of the keys this document has.
 
 </p>
 <h3>save</h3>
 <h4>Document.prototype.save([callback])</h4>
+<p>If the document does not exist, creates the document. If the document already exists, saves the document.
+
+</p>
 <h3>remove</h3>
 <h4>Document.prototype.remove([callback])</h4>
+<p>Removes the document from the DB. Callback is called once document has been removed successfully.
+
+</p>
 <h3>manyAssocs</h3>
 <h4>Document.prototype.manyAssocs()</h4>
-<p>  Returns a list of the many associations this document has.
+<p>Returns a list of the many associations this document has.
 
 </p>
 <pre><code class="javascript">module.exports = Document(&quot;Post&quot;)
@@ -609,7 +536,7 @@ var post = new Post()
 post.manyAssocs() // [&quot;comments&quot;]</code></pre>
 <h3>oneAssocs</h3>
 <h4>Document.prototype.oneAssocs()</h4>
-<p>  This is the names of one assocs, as well as belongsTo assocs, since they both
+<p>This is the names of one assocs, as well as belongsTo assocs, since they both
 point to one document.
 
 </p>
@@ -634,7 +561,7 @@ var post = new Post()
 post.assocs() // [&quot;comments&quot;, &quot;author&quot;]</code></pre>
 <h3>validate</h3>
 <h4>Document.prototype.validate([callback, opts])</h4>
-<p>  Forces the document to validate.  This method is called automatically
+<p>Forces the document to validate.  This method is called automatically
 everytime a value is changed with .set().  This will emit <code>valid</code> or
 <code>invalid</code> events.
 
@@ -648,15 +575,33 @@ post.validate(function(post, invalidFields) {
 })</code></pre>
 <h3>validateField</h3>
 <h4>Document.prototype.validateField(field[, callback, opts])</h4>
+<p>Validates the contents of a specified <code>field</code>. <code>callback</code> is called when finished. If the field is invalid, the second parameter to <code>callback</code> will be a list of failed validations.
+
+</p>
+<p>Options:
+  * silent - If true, doesn&#39;t emit an event.
+
+</p>
 <h3>isUnique</h3>
 <h4>Document.prototype.isUnique(field, value, callback)</h4>
-<p>  Calls callback with <code>true</code> as the first argument if the field is
+<p>Calls callback with <code>true</code> as the first argument if the field is
 unique, otherwise it calls it with <code>false</code>
 
 </p>
 <pre><code class="javascript">  Post.isUnique(&quot;email&quot;, &quot;x.coder.zach{At}gmail.com&quot;, function(isUnique) {
     isUnique //true if is unique, false otherwise.            
   })</code></pre>
+<p>  You can Define your own instance methods like so:
+</p>
+<pre><code class="javascript">  //Every type of document will get this method
+  Document.prototype.myMethod = function() {
+
+  }
+
+  //Just Posts will get this method
+  Post.prototype.myMethod = function() {
+
+  }</code></pre>
 <h2>Document Instance Events</h2>
 <p>  There are a lot of events a document can emit as it&#39;s state changes.
 Here&#39;s a list of all of them in one place, so you don&#39;t have to hunt around.
@@ -728,13 +673,20 @@ happens when an error is passed into the done method of after save.
 <code>scope</code> is a function in which routes are defined.
 
 </p>
+<pre><code class="javascript">controller = new LiveController(&quot;/posts&quot;, function(app) {
+  app.get(&quot;/show/:id&quot;, function() {
+    //do stuff
+  })
+})</code></pre>
 <h3>navigate</h3>
 <h5>LiveController.navigate(url, opts)</h5>
-<p>Navigates to the specified <code>url</code>. 
-<code>opts</code> determines whether the navigation is done through <code>refresh</code>
-(document.location) or <code>push</code> (history.pushState, not supported on older
-browsers). Optional. Defaults to <code>push</code>.
+<p>Navigates to the specified <code>url</code>.
 
+</p>
+<p>Options:
+  <em> method - accepts strings <code>push</code> and <code>reload</code>. <code>push</code> is used by default. 
+    </em> push - (default) use history.pushState to navigate without refreshing the page.
+    * refresh - uses document.location to navigate by refreshing page, included for older browser support.
 
 </p>
 <h3>get</h3>
@@ -743,36 +695,135 @@ browsers). Optional. Defaults to <code>push</code>.
 the view is created.
 
 </p>
+<pre><code class="javascript">LiveController.get(&quot;/&quot;, function() {
+  //do stuff
+})</code></pre>
 <h3>before</h3>
 <h5>scope.before(fn)</h5>
 <p><code>fn</code> is run before the controller gets a route.
+
 
 </p>
 <h3>after</h3>
 <h5>scope.after(fn)</h5>
 <p><code>fn</code> is run after the controller gets a route.
 </p>
+<h1>AssetPipeline API</h1>
+<h2>AssetPipe</h2>
+<h3>script</h3>
+<h5>AssetPipe.script()</h5>
+<p>Returns a new script pipeline.
+
+</p>
+<h3>image</h3>
+<h5>AssetPipe.image()</h5>
+<p>Returns a new image pipeline.
+
+</p>
+<h3>stylesheet</h3>
+<h5>AssetPipe.stylesheet()</h5>
+<p>Returns a new stylesheet pipeline.
+
+</p>
+<h3>html</h3>
+<h5>AssetPipe.html()</h5>
+<p>Returns a new html pipeline.
+
+</p>
+<h2>Pipeline</h2>
+<h3>root</h3>
+<h5>Pipeline.root(directory)</h5>
+<p><code>root</code> is the root directory from which the assets will be served. Used to translate URLs to file names.
+
+</p>
+<h3>fileExtension</h3>
+<h5>Pipeline.fileExtension(extension)</h5>
+<p><code>extension</code> refers to the file extension of the assets which will be served.
+
+</p>
+<pre><code class="javascript">Pipe
+  .fileExtension(&quot;coffee&quot;)</code></pre>
+<p>This will serve CoffeeScript files.
+
+</p>
+<h3>urlExtension</h3>
+<h5>Pipeline.urlExtension(extension)</h5>
+<p><code>extension</code> refers to the file extension on the requested URL.
+
+</p>
+<pre><code class="javascript">Pipe
+  .fileExtension(&quot;coffee&quot;)
+  .urlExtension(&quot;js&quot;)
+  .process(coffee)</code></pre>
+<p>This will serve CoffeeScript files compiled as JavaScript.
+
+</p>
+<h3>addFiles</h3>
+<h5>Pipeline.addFiles(file)</h5>
+<p><code>file</code> is a string. If <code>file</code> contains a filename, that filename will be served. If it contains a directory name, all files within that directory, and all subdirectories, will be served.
+
+</p>
+<h3>process</h3>
+<h5>Pipeline.process(processor)</h5>
+<p><code>processor</code> is a function that processes assets accessed through the pipeline in some way. (e.g. processing CoffeeScript to JavaScript or less into css.)
+
+</p>
+<h2>Processor</h2>
+<p>There are several built-in processors:
+
+</p>
+<h3>coffeescript</h3>
+<p>This processor compiles CoffeeScript into JavaScript.
+
+</p>
+<pre><code class="javascript">Pipe
+  .process(require(&quot;AssetPipeline/lib/processors/coffeescript&quot;))</code></pre>
+<h3>less</h3>
+<p>This processor parses LESS into CSS. By default, the LESS processor includes bootstrap in its paths, so you can @import any default bootstrap stylesheets.
+
+</p>
+<pre><code class="javascript">Pipe
+  .process(require(&quot;AssetPipeline/lib/processors/less&quot;))</code></pre>
+<h3>stylus</h3>
+<p>This processor parses Stylus into CSS. It includes stylus-blueprint and nib by default.
+
+</p>
+<pre><code class="javascript">Pipe
+  .process(require(&quot;AssetPipeline/lib/processors/stylus&quot;))</code></pre>
+<h3>module</h3>
+<p>This processor wraps javascript files in commonjs modules.
+
+</p>
+<pre><code class="javascript">module = require(&quot;AssetPipeline/lib/processors/modules&quot;)
+Pipe
+  .process(module(baseURL, aliases))</code></pre>
+<p><code>baseURL</code> refers to the root URL from which modules will be requirable.
+<code>aliases</code> refers to a map of module name aliases.
+
+</p>
+<h3>strip code</h3>
+<p>This processor strips arguments out of function calls where the function name begins with <code>server</code>.
+
+</p>
+<pre><code class="javascript">Pipe
+  .process(require(&quot;AssetPipeline/lib/processors/strip_code&quot;))</code></pre>
 
         </div>
       </div>
     </div> <!-- /container -->
-
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="assets/js/jquery.js"></script>
-    <script src="assets/js/bootstrap-transition.js"></script>
-    <script src="assets/js/bootstrap-alert.js"></script>
-    <script src="assets/js/bootstrap-modal.js"></script>
-    <script src="assets/js/bootstrap-dropdown.js"></script>
-    <script src="assets/js/bootstrap-scrollspy.js"></script>
-    <script src="assets/js/bootstrap-tab.js"></script>
-    <script src="assets/js/bootstrap-tooltip.js"></script>
-    <script src="assets/js/bootstrap-popover.js"></script>
-    <script src="assets/js/bootstrap-button.js"></script>
-    <script src="assets/js/bootstrap-collapse.js"></script>
-    <script src="assets/js/bootstrap-carousel.js"></script>
-    <script src="assets/js/bootstrap-typeahead.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/jquery.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-transition.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-alert.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-modal.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-scrollspy.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tab.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tooltip.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-popover.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-button.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-collapse.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-carousel.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-typeahead.js"></script>
     <script>
     window.onload = function () {
     $(".toc").prepend("<h2>SpaceMagic</h2><br ><i class=icon-download></i><a href=https://github.com/xcoderzach/SpaceMagic>Git Repository</a>")}
@@ -792,8 +843,5 @@ the view is created.
   });
   // Put a title on the table of contents
     </script>
-  <link href=http://fonts.googleapis.com/css?family=Droid+Sans:400,700 rel=stylesheet type=text/css>
-  <link href=http://fonts.googleapis.com/css?family=Josefin+Sans:400,700 rel=stylesheet type=text/css>
-
   </body>
 </html>

@@ -32,6 +32,7 @@ curl https://raw.github.com/xcoderzach/LiveView/master/docs/api.md >> allthedocs
 curl https://raw.github.com/xcoderzach/LiveDocument/master/docs/api.md >> allthedocs.md
 curl https://raw.github.com/xcoderzach/LiveController/master/docs/api.md >> allthedocs.md
 curl https://raw.github.com/xcoderzach/AssetPipeline/master/docs/api.md >> allthedocs.md
+curl https://raw.github.com/xcoderzach/SpaceMagic/master/docs/views.md >> allthedocs.md
 marked --gfm allthedocs.md >> index.html
 echo '        </div>
       </div>

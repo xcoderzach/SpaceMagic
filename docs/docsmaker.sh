@@ -9,10 +9,54 @@ echo '
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <!-- Le styles -->
     <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
     <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="assets/css/style.css" rel="stylesheet">
+
+    <style>
+      body {
+        padding-top: 30px;
+      }
+
+      .container  {
+        margin-left: 0px;
+      }
+
+      .row {
+        margin-left: 0px;
+      }
+
+      .toc {
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
+      .toc ul {
+      margin: 0;
+      }
+
+      .toc li a{
+        color: black;
+        
+      }
+
+      #toc .H1 {
+        font-weight: bold;
+        text-decoration:underline;
+        margin: 15px 0px 0px 0px;
+        list-style-type: none;
+      }
+
+      #toc .H2 {
+        font-weight: bold;
+        list-style-type: none;
+        margin-left: 10px;
+      }
+
+      #toc .H3 {
+        margin-left: 20px;
+        list-style-type: circle;
+      }
+    </style>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -28,11 +72,11 @@ echo '
         </div>
         <div class="span8">'>index.html
 curl https://raw.github.com/xcoderzach/SpaceMagic/master/docs/index.markdown > allthedocs.md
+curl https://raw.github.com/xcoderzach/SpaceMagic/master/docs/views.md >> allthedocs.md
 curl https://raw.github.com/xcoderzach/LiveView/master/docs/api.md >> allthedocs.md
 curl https://raw.github.com/xcoderzach/LiveDocument/master/docs/api.md >> allthedocs.md
 curl https://raw.github.com/xcoderzach/LiveController/master/docs/api.md >> allthedocs.md
 curl https://raw.github.com/xcoderzach/AssetPipeline/master/docs/api.md >> allthedocs.md
-curl https://raw.github.com/xcoderzach/SpaceMagic/master/docs/views.md >> allthedocs.md
 marked --gfm allthedocs.md >> index.html
 echo '        </div>
       </div>

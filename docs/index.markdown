@@ -47,4 +47,4 @@ SpaceMagic is an MV* framework. Its main components are:
   * [LiveDocument](https://github.com/xcoderzach/LiveDocument) - A real-time client-server isomorphic ODM.
   * [LiveController](https://github.com/xcoderzach/LiveController) - A tiny, client-side, pushState router. 
   * [AssetPipeline](https://github.com/xcoderzach/AssetPipeline) - A static asset provider with support for minification, javascript modules, and caching.
-                                                                                                                
+

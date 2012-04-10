@@ -9,10 +9,54 @@ echo '
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <!-- Le styles -->
-    <link href="assets/css/bootstrap.css" rel="stylesheet">
-    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <style>
+      body {
+        padding-top: 30px;
+      }
+
+      .container  {
+        margin-left: 0px;
+      }
+
+      .row {
+        margin-left: 0px;
+      }
+
+      .toc {
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
+      .toc ul {
+      margin: 0;
+      }
+
+      .toc li a{
+        color: black;
+        
+      }
+
+      #toc .H1 {
+        font-weight: bold;
+        text-decoration:underline;
+        margin: 15px 0px 0px 0px;
+        list-style-type: none;
+      }
+
+      #toc .H2 {
+        font-weight: bold;
+        list-style-type: none;
+        margin-left: 10px;
+      }
+
+      #toc .H3 {
+        margin-left: 20px;
+        list-style-type: circle;
+      }
+    </style>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -28,31 +72,28 @@ echo '
         </div>
         <div class="span8">'>index.html
 curl https://raw.github.com/xcoderzach/SpaceMagic/master/docs/index.markdown > allthedocs.md
-curl https://raw.github.com/xcoderzach/LiveView/develop/docs/api.md >> allthedocs.md
-curl https://raw.github.com/xcoderzach/LiveDocument/master/docs/associations.md >> allthedocs.md
+curl https://raw.github.com/xcoderzach/SpaceMagic/master/docs/views.md >> allthedocs.md
+curl https://raw.github.com/xcoderzach/LiveView/master/docs/api.md >> allthedocs.md
 curl https://raw.github.com/xcoderzach/LiveDocument/master/docs/api.md >> allthedocs.md
-curl https://raw.github.com/xcoderzach/LiveController/develop/docs/api.md >> allthedocs.md
+curl https://raw.github.com/xcoderzach/LiveController/master/docs/api.md >> allthedocs.md
+curl https://raw.github.com/xcoderzach/AssetPipeline/master/docs/api.md >> allthedocs.md
 marked --gfm allthedocs.md >> index.html
 echo '        </div>
       </div>
     </div> <!-- /container -->
-
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="assets/js/jquery.js"></script>
-    <script src="assets/js/bootstrap-transition.js"></script>
-    <script src="assets/js/bootstrap-alert.js"></script>
-    <script src="assets/js/bootstrap-modal.js"></script>
-    <script src="assets/js/bootstrap-dropdown.js"></script>
-    <script src="assets/js/bootstrap-scrollspy.js"></script>
-    <script src="assets/js/bootstrap-tab.js"></script>
-    <script src="assets/js/bootstrap-tooltip.js"></script>
-    <script src="assets/js/bootstrap-popover.js"></script>
-    <script src="assets/js/bootstrap-button.js"></script>
-    <script src="assets/js/bootstrap-collapse.js"></script>
-    <script src="assets/js/bootstrap-carousel.js"></script>
-    <script src="assets/js/bootstrap-typeahead.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/jquery.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-transition.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-alert.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-modal.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-scrollspy.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tab.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tooltip.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-popover.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-button.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-collapse.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-carousel.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-typeahead.js"></script>
     <script>
     window.onload = function () {
     $(".toc").prepend("<h2>SpaceMagic</h2><br ><i class='icon-download'></i><a href='https://github.com/xcoderzach/SpaceMagic'>Git Repository</a>")}
@@ -72,8 +113,5 @@ echo '        </div>
   });
   // Put a title on the table of contents
     </script>
-  <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Josefin+Sans:400,700' rel='stylesheet' type='text/css'>
-
   </body>
 </html>' >> index.html

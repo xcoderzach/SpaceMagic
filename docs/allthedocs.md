@@ -2,50 +2,24 @@ Welcome to SpaceMagic
 =====================
 
   SpaceMagic is a full-stack javascript web development framework which allows
-you to build fast, real-time web applications.  SpaceMagic allows you to write only
+you to build fast, real-time web applications.  It allows you to write only
 one app and share it between the client and the server.
 
-What does SpaceMagic do for me?
--------------------------------
-
-  * SpaceMagic's oodm (Observable Object Document Mapper), LiveDocument, spans
-    the client and the server, allowing users to write database code once, and
-    interact with it on both the server and the client.
-
-  * LiveDocument automatically keeps clients notified of changes to any
-    documents or collections of documents they query.  This makes writing
-    real-time client updating code unnecesary.  The real-time just happens, all the
-    time, everywhere.
-
-  * SpaceMagic's templating layer, LiveView allows for truely logicless views.
-    simply write your semantic HTML5 and it's already a template.
-
-  * SpaceMagic's views automatically keep everything up-to-date with all of the
-    incoming real-time changes.  However all updates are overrideable, giving
-    you flexibility of when, what, and how everything get's updated.
-
-  * SpaceMagic's assetPipeline provides minifying, cacheing, and compressing of
-    static assets.  It also pushes updated versions of static assets when they
-    change in development mode.  Saving you from constantly refreshing pages.
-
-  * SpaceMagic provides a commonjs module loader on the client so you can reuse
-    your own code between the client and the server.
-
 Installation
-============
+------------
 
 ```
-mkdir my_project
-cd my_project
-npm install spacemagic
-space-magic init my_project
+npm install -g spacemagic
+spacemagic init myProject
+cd myProject
+npm install
 ```
 
 Configure
 ---------
 
   You need to have mongodb installed, if you don't, go here
-[http://www.mongodb.org/display/DOCS/Quickstart](MongoDB QuickStart Guide)
+[MongoDB QuickStart Guide](http://www.mongodb.org/display/DOCS/Quickstart)
 
   If you're already running MongoDB on localhost on the default port, you're done.
 But if you need to configure your database connection info goto the file:
@@ -56,45 +30,208 @@ vim config/database.js
 ```
 
 Next Steps
-==========
+----------
 
-checkout our Basic Todo Tutorial
-or the Chat Tutorial
-or the Micro Blogging tutorial
-or checkout the Guides
-or dive into the API documentation
+  * Checkout our Basic Todo Tutorial
+  * or the Chat Tutorial
+  * or the Micro Blogging tutorial
+  * or checkout the Guides
+  * or dive into the API documentation
+
+High-level Overview
+-------------------
+
+SpaceMagic is an MV* framework. Its main components are:
+
+  * [LiveView](https://github.com/xcoderzach/LiveView) - A pure, semantic HTML-based templating language.
+  * [LiveDocument](https://github.com/xcoderzach/LiveDocument) - A real-time client-server isomorphic ODM.
+  * [LiveController](https://github.com/xcoderzach/LiveController) - A tiny, client-side, pushState router. 
+  * [AssetPipeline](https://github.com/xcoderzach/AssetPipeline) - A static asset provider with support for minification, javascript modules, and caching.
+
+Views API
+=========
+
+##View
+
+###viewName
+
+#####View.viewName()
+
+Returns name of view.
+
+###define
+
+#####View.define(name [, constructor])
+
+Defines new view class with name `name` and optional constructor `constructor`.
+
+###template
+
+#####View.template(template)
+
+Loads a template into the view. `template` is a string containing the URL of the template.
+
+###element
+
+#####View.element(selector, callback)
+#####View.element(callback)
+
+When view is created, `callback` is called with first parameter element where element is the jQuery result of `selector`.
+
+###action
+
+#####View.action(actionSelector, callback)
+
+`actionSelector` is a string containing an event followed by a selector. (e.g.
+"click .close" or "keypress .nameField") `callback` is called when the action
+is performed on the selector.
+
+The first argument for callback is the event object, the second parameter is the element.
+
+###title
+
+#####View.title(title)
+
+Changes the browser title to `title` when view is loaded.
+
+###subView
+
+#####View.subView(selector, view, opts)
+
+Specifies a view class which will be loaded as a sub view with `selector` indicating the template.
+
+##View Attributes
+
+###this.model
+
+Model that was passed into view.
+
+###this.view
+
+LiveView instance generated from template.
+
+###this.parent
+
+Parent view of the current view.
+
+##SingleView
+
+SingleView has all the methods of view but, in addition, binds all key in model to the view.
+
+###map
+
+#####SingleView.map(key, mapper)
+
+When `key` is loaded or changes on the model, calls `mapper` with the key and the value associated with the key, then sets key in the view to the return value of mapper.
+######TODO: make async.
+
+##ListView
+
+###beforeInsert
+
+#####ListView.beforeInsert(fn)
+
+Runs `fn` before a new item is added to the list.
+
+`fn`'s arguments are: `model`, `view`, and `done`. Once `done` is called, `view` is appended to the DOM.
+
+###beforeRemove
+
+#####ListView.beforeRemove(fn)
+
+Runs `fn` before a new item is removed from the list.
+
+`fn`'s arguments are: `model`, `view`, and `done`. Once `done` is called, `view` is removed from the DOM.
+
+###singleView
+
+#####ListView.singleView(view)
+
+`view` is the class to use for each view in the list.
+
+##FormView
+
+###beforeSave
+
+#####FormView.beforeSave(fn)
+
+Runs `fn` before form input is saved.
+
+###afterSave
+
+#####FormView.afterSave(fn)
+
+Runs `fn` after form input is saved.
+
+###saveOnChange
+
+#####FormView.saveOnChange()
+
+If called, this view will automatically save the model after any changes.
+
+###error
+
+#####FormView.error(field, errorMessages)
+
+Displays an errorMessage when model invalidates the field `field`.
+
+###autoSave
+
+#####FormView.autoSave(timeout)
+
+If called, this view will automatically save the model after `timeout` milliseconds without new changes.
 
 LiveView API Documentation 
 ==========================
 
-###LiveView Constructor
+##LiveView
 
-#####LiveView(template, data, callback, scope)
+#####LiveView(template, data[, scope])
 
 Constructs a new live view from a template. The `template` may be a template
 url, css selector, or html.  `data` refers to the data with which the live view
-is initialized.  The `set` method is used to update the live view.  `scope` is
-an array of strings that describes the scope, the elements over which the live
-view can act, of the live view. If omitted, LiveView will assume the default
-scope, "main."
+is initialized. `scope` is an array of strings that describe the scope of the 
+live view variables. If omitted, LiveView will assume the default scope, "main."
 
 ###changeTemplate
 
 #####LiveView.changeTemplate(template) 
 
-Changes the template used by the live view to the one specified.
+Changes the template used by the live view to the one specified. This can be used to hotswap templates during development.
+######TODO: Make hotswapping possible
 
 ###find
 
 #####LiveView.find(selector)
 
-Returns elements of a certain type from polymorphic subviews.
+Returns elements that match selector. Finds elements in current view as well as elements in any polymorphic subviews.
 
 ###set
 
 #####LiveView.set(name, value)
+#####LiveView.set(JSONObject)
 
-Sets the value or values of an element `name` to `value`.
+Sets the value or values of an element `name` to `value`. If a single object is passed, set each key in `JSONObject` to its value.
+
+```html
+<div class="post"></div>
+```
+
+```javascript
+LiveView.set("post", "An angry comment about your taste in movies.")
+```
+If live view was constructed with scopes, you can do the following:
+
+```html
+<div class = "title"></div>
+<div class = "postTitle"></div>
+```
+
+```javascript
+var view = new LiveView("template.html", {})
+view.set("title", "Another post.")
+```
+This will set both .title and .postTitle, this can be used to disambiguate classes in subViews.
 
 ###remove
 
@@ -110,29 +247,17 @@ Removes the live view from the document while leaving events intact.
 
 ###attach
 
-#####LiveView.attach(element)
-
-Attaches live view to a particular element.
-
-###attach
-
 #####LiveView.attach(container)
 
 Attaches live view to a particular container.
 
-###LiveViewCollection Constructor
-
-#####LiveViewCollection(container, data, name, scope)
-
-Constructs a new live view collection. Constructor requires a `container`
-within the template to contain the view, `data`, a name for the collection, and
-an optional `scope`.
+##LiveViewCollection
 
 ###showLoading
 
 #####LiveViewCollection.showLoading() 
 
-Appends a special loading element to the end of the collection if one exists.
+Appends a special loading element to the end of the collection if any such element exists.
 
 ###hideLoading
 
@@ -144,8 +269,7 @@ Removes the special loading element from the collection.
 
 #####LiveViewCollection.get(id)
 
-Returns the view at index `id`. If two arguments are used, function returns the
-first element with data where key arg1 === arg2
+Returns the view at index `id` in the collection.
 
 ###length
 
@@ -179,84 +303,7 @@ the live view collection.  Returns a new live view when completed.
 
 #####LiveViewCollection.append(data)
 
-Inserts each of an array of views into the live view collection.
-LiveDocument Associations
-============
-
-  LiveDocument supports three types of associations
-many, one, and belongsTo.
-
-One
----
-
-  A _one_ association defines a relationship where one document maps to one
-other document.
-
-```javascript
-// app/models/user.js
-module.exports = Document("User")
-  .key("name") 
-  .one("profile")
-// app/models/profile.js
-module.exports = Document("Profile")
-  .key("jobTitle") 
-  .one("user")
-```
-
-  To use this, you can just use the assoc method like this:
-
-```javascript
-var user = User.findOne(id)
-var profile = user.assoc("profile")
-```
-
-  The associated document returned can be used just like any other
-document and is not necessarily loaded.
-
-Many
-----
-
-  A _many_ association defines a relationship where a one document has 0 or
-more related documents.
-
-  To define a _many_ association, you simply call the many method with the name
-of the association.
-
-```javascript
-// app/models/blog_post.js
-module.exports = Document("BlogPost")
-  .key("title")
-  .many("comments")
-// app/models/comment.js
-module.exports = Document("Comment")
-  .key("body")
-  .belongsTo("blogPost")
-```
-
-  Now to use the associations
-```javascript
-var post = BlogPost.findOne(id)
-var comments = post.assoc("comments")
-```
-  This will find the model with the name Comment and return the comments with
-a blogPostId equal to the blogPost's _id.  The comments can be interacted with
-like any other collection.  So you can do things that won't happen until they're
-loaded with the .loaded method.
-
-  Many associations can also map to [embedded]() documents.
-
-BelongsTo
----------
-
-  The document with the belongsTo association is the document which actually has the
-foreign key in it.  It can be used to access the document it belongs to exactly like
-the other two associations.  Using the blog post example from above, we can access
-the post to which a comment belongs like this:    
-
-```javascript
-var comment = Comment.findOne(id)
-var post = comment.assoc("blogPost")
-```
+Inserts a view or each of an array of views into the live view collection.
 LiveDocument API
 ================
 
@@ -296,7 +343,7 @@ how to make your own custom validations, see the
 
 ####Document.timestamps()
 
-  The `timestamps` method will give your document createdAt and updatedAt
+  The `timestamps` method will give your document `createdAt` and `updatedAt`
 timestamps.  The timestamps will be created and updated automatically.
 The format of a timestamp is a unix timestamp, specifically the result
 of calling `(new Date).getTime()`
@@ -313,13 +360,18 @@ module.exports = Document("Post")
 
 ####Document.getKey(name, watchFields, valueFn)
   
-  The `getKey` method defines a dynamic key, whose value is determined by the
+  The `getKey` method defines a dynamic key whose value is determined by the
 return value of valueFn.
 
   A change event "change:name" will be called when any of the fields listed in
 watchFields changes.
 
-`valueFn`
+```javascript
+User = Document("User")
+  .getKey("fullName", ["first", "last"], function () {
+    return this.get("first") + " " + this.get("last")
+  })
+```
 
 ###setKey
 
@@ -344,14 +396,14 @@ module.exports = Document("Post")
 Document Hook Methods
 ---------------------
 
-  These methods registers a handler to be called before or after
+  These methods register a handler to be called before or after
 some action is performed on a document.
 
 In each of these methods, `fn` takes two arguments:
 
   * `instance` - The instance of the document
 
-  * `done` - A function to call when your handler is finished.  If anything is
+  * `done` - A function to be called when your handler is finished.  If anything is
 passed to done in a before filter, the document will not save and whatever was
 passed to done will be emitted as the first argument to the `"error"` event.
 
@@ -431,14 +483,14 @@ called on the client.
 
   This is called after removing a document on the server.
 
-Associations
-------------
+Document Association Methods
+----------------------------
 
   Associations provide a way to model relationships between your documents.
 For example, `blogPosts` might have many `comments` and a `blogPost` might
 belongTo an `author` or an `author` might have one `profile`.
 
-  NOTE: A quick note about cyclic dependencies.  If two documents have each
+  **NOTE**: A quick note about cyclic dependencies.  If two documents have each
 other as associations, i.e. one belongs to another, then we need to do
 the following:
 
@@ -557,7 +609,7 @@ var post = Post.find({votes: { $gt: 100 })
 
 ####Document.findOne(id[, callback])  
 
-  Find one takes in an _id, and finds a document with that id.  The document is
+  `findOne` takes in an `_id`, and finds a document with that id.  The document is
 returned immediatly, however none of it's properties are actually set.  However
 you can, and should, pass it to the view immediatly.  The document will fire
 [events](/document-events) as it's state changes (i.e. when it loads, or
@@ -581,8 +633,8 @@ var post = Post.findOne("4f7580a64e822029b7000001")
 
 ####Document.findByKey(key, value[, callback])   
 
-Finds the document `key` equals `value`, there should
-only be one document where `key` equals `value`. i.e. value
+Finds the document in which `key` equals `value`, there should
+only be one document where `key` equals `value`. i.e. `value`
 should be unique.
 
 ```javascript
@@ -616,50 +668,54 @@ user.save()
 
 Document Instance Methods
 -----------------------
- 
-  Now that you've found or created document, and now you want to do things with it.
 
-  You can Define your own instance methods like so:
-```javascript
-  //Every type of document will get this method
-  Document.prototype.myMethod = function() {
-
-  }
-
-  //Just Posts will get this method
-  Post.prototype.myMethod = function() {
-
-  }
-```
 ###constructor
-####Document(jsonDocument[, options])
+
+####Document(JSONDocument[, options])
+
+Constructs a new document instance.
+
+Options:
+  * validate - defaults to `true`. Specifies whether to value the contents of the JSONDocument.
+  * noId - defaults to `false`. If `noId` is `true`, constructor does not generate an id.
 
 ###set
+
 ####Document.prototype.set(properies[, options])
+
 ####Document.prototype.set(key, value[, options])
 
+Sets the value of `key` to `value`. If the first parameter is an object, sets the value of each `key` in the document to its `value`.
 
 ###get
 ####Document.prototype.get(key)
 
+Gets the value of the `key`.
+
 ###assoc
-####Document.prototype.get(name[, callback])
+####Document.prototype.assoc(name[, callback])
+
+Returns associated document or collection. `callback` is called once association is loaded.
 
 ###keys
 ####Document.prototype.keys()
 
-  Returns a list of the keys this document has.
+Returns a list of the keys this document has.
 
 ###save
 ####Document.prototype.save([callback])
 
+If the document does not exist, creates the document. If the document already exists, saves the document.
+
 ###remove
 ####Document.prototype.remove([callback])
+
+Removes the document from the DB. Callback is called once document has been removed successfully.
 
 ###manyAssocs
 ####Document.prototype.manyAssocs()
 
-  Returns a list of the many associations this document has.
+Returns a list of the many associations this document has.
 
 ```javascript
 module.exports = Document("Post")
@@ -673,7 +729,7 @@ post.manyAssocs() // ["comments"]
 ###oneAssocs
 ####Document.prototype.oneAssocs()
 
-  This is the names of one assocs, as well as belongsTo assocs, since they both
+This is the names of one assocs, as well as belongsTo assocs, since they both
 point to one document.
 
 ```javascript
@@ -704,7 +760,7 @@ post.assocs() // ["comments", "author"]
 ###validate
 ####Document.prototype.validate([callback, opts])
 
-  Forces the document to validate.  This method is called automatically
+Forces the document to validate.  This method is called automatically
 everytime a value is changed with .set().  This will emit `valid` or
 `invalid` events.
 
@@ -722,16 +778,34 @@ post.validate(function(post, invalidFields) {
 ###validateField
 ####Document.prototype.validateField(field[, callback, opts])
 
+Validates the contents of a specified `field`. `callback` is called when finished. If the field is invalid, the second parameter to `callback` will be a list of failed validations.
+
+Options:
+  * silent - If true, doesn't emit an event.
+
 ###isUnique
 ####Document.prototype.isUnique(field, value, callback)
 
-  Calls callback with `true` as the first argument if the field is
+Calls callback with `true` as the first argument if the field is
 unique, otherwise it calls it with `false`
 
 ```javascript
   Post.isUnique("email", "x.coder.zach{At}gmail.com", function(isUnique) {
     isUnique //true if is unique, false otherwise.            
   })
+```
+
+  You can Define your own instance methods like so:
+```javascript
+  //Every type of document will get this method
+  Document.prototype.myMethod = function() {
+
+  }
+
+  //Just Posts will get this method
+  Post.prototype.myMethod = function() {
+
+  }
 ```
 
 Document Instance Events
@@ -808,15 +882,24 @@ LiveController API Documentation
 `base` is a string the URL over which the controller acts. (ex. "/posts")
 `scope` is a function in which routes are defined.
 
+```javascript
+controller = new LiveController("/posts", function(app) {
+  app.get("/show/:id", function() {
+    //do stuff
+  })
+})
+```
+
 ###navigate
 
 #####LiveController.navigate(url, opts)
 
-Navigates to the specified `url`. 
-`opts` determines whether the navigation is done through `refresh`
-(document.location) or `push` (history.pushState, not supported on older
-browsers). Optional. Defaults to `push`.
+Navigates to the specified `url`.
 
+Options:
+  * method - accepts strings `push` and `reload`. `push` is used by default. 
+    * push - (default) use history.pushState to navigate without refreshing the page.
+    * refresh - uses document.location to navigate by refreshing page, included for older browser support.
 
 ###get
 
@@ -825,14 +908,149 @@ browsers). Optional. Defaults to `push`.
 `route` is the route for a particular view. `callback` is the function in which
 the view is created.
 
+```javascript
+LiveController.get("/", function() {
+  //do stuff
+})
+```
+
 ###before
 
 #####scope.before(fn)
 
 `fn` is run before the controller gets a route.
 
+
 ###after
 
 #####scope.after(fn)
 
 `fn` is run after the controller gets a route.
+AssetPipeline API
+=================
+
+##AssetPipe
+
+###script
+
+#####AssetPipe.script()
+
+Returns a new script pipeline.
+
+###image
+
+#####AssetPipe.image()
+
+Returns a new image pipeline.
+
+###stylesheet
+
+#####AssetPipe.stylesheet()
+
+Returns a new stylesheet pipeline.
+
+###html
+
+#####AssetPipe.html()
+
+Returns a new html pipeline.
+
+##Pipeline
+
+###root
+
+#####Pipeline.root(directory)
+
+`root` is the root directory from which the assets will be served. Used to translate URLs to file names.
+
+###fileExtension
+
+#####Pipeline.fileExtension(extension)
+
+`extension` refers to the file extension of the assets which will be served.
+
+```javascript
+Pipe
+  .fileExtension("coffee")
+```
+This will serve CoffeeScript files.
+
+###urlExtension
+
+#####Pipeline.urlExtension(extension)
+
+`extension` refers to the file extension on the requested URL.
+
+```javascript
+Pipe
+  .fileExtension("coffee")
+  .urlExtension("js")
+  .process(coffee)
+```
+This will serve CoffeeScript files compiled as JavaScript.
+
+###addFiles
+
+#####Pipeline.addFiles(file)
+
+`file` is a string. If `file` contains a filename, that filename will be served. If it contains a directory name, all files within that directory, and all subdirectories, will be served.
+
+###process
+
+#####Pipeline.process(processor)
+
+`processor` is a function that processes assets accessed through the pipeline in some way. (e.g. processing CoffeeScript to JavaScript or less into css.)
+
+##Processor
+
+There are several built-in processors:
+
+###coffeescript
+
+This processor compiles CoffeeScript into JavaScript.
+
+```javascript
+Pipe
+  .process(require("AssetPipeline/lib/processors/coffeescript"))
+```
+
+###less
+
+This processor parses LESS into CSS. By default, the LESS processor includes bootstrap in its paths, so you can @import any default bootstrap stylesheets.
+
+```javascript
+Pipe
+  .process(require("AssetPipeline/lib/processors/less"))
+```
+
+###stylus
+
+This processor parses Stylus into CSS. It includes stylus-blueprint and nib by default.
+
+```javascript
+Pipe
+  .process(require("AssetPipeline/lib/processors/stylus"))
+```
+
+###module
+
+This processor wraps javascript files in commonjs modules.
+
+```javascript
+module = require("AssetPipeline/lib/processors/modules")
+Pipe
+  .process(module(baseURL, aliases))
+```
+
+`baseURL` refers to the root URL from which modules will be requirable.
+`aliases` refers to a map of module name aliases.
+
+###strip code
+
+This processor strips arguments out of function calls where the function name begins with `server`.
+
+```javascript
+Pipe
+  .process(require("AssetPipeline/lib/processors/strip_code"))
+```
+

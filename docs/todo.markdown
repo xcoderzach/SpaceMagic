@@ -25,4 +25,5 @@ npm install
 This will create a barebones spacemagic application, and install all of the npm
 modules we need to get our app up and running.
 
-If you go 
+If you go to localhost:3000 you should see the welcome to spacemagic screen.
+If the thing is green that means bootstrap is up and running.

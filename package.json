@@ -2,7 +2,7 @@
   "name": "SpaceMagic"
 , "description": "Real-Time Full Stack Web Framework"
 , "version": "0.0.1"
-, "author": "Mukari <dev@mukari.com>"
+, "author": "SpaceMagic <development@spacemagic.io>"
 , "dependencies": {
     "connect": "1.8.3"
   , "socket.io": "0.8.7"
@@ -10,7 +10,7 @@
   , "mongolian": "0.1.17"
   , "underscore": "1.2.x"
   , "mu2": "x.x.x"
-  , "connect-mongolian": "git://github.com/xcoderzach/connect-mongolian.git"
+  , "connect-mongolian-session": "x.x.x"
   }
 , "scripts": {
     "start": "./bin/spacemagic.js server"

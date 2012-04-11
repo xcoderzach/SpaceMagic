@@ -13,6 +13,10 @@
   , "live-controller": "git://github.com/xcoderzach/LiveController.git"
   , "asset-pipeline": "git://github.com/xcoderzach/AssetPipeline.git"
   }
+
+, "scripts": {                                                                                                                                                                               
+     "start": "sudo ./node_modules/.bin/spacemagic server --port 80"
+   }
 , "devDependencies": {
     "mocha": "0.13.x"
   , "should": "0.3.x"

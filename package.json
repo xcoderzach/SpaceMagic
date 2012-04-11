@@ -10,7 +10,7 @@
   , "mongolian": "0.1.17"
   , "underscore": "1.2.x"
   , "mu2": "x.x.x"
-  , "connect-mongolian": "http://github.com/xcoderzach/connect-mongolian.git"
+  , "connect-mongolian": "git://github.com/xcoderzach/connect-mongolian.git"
   }
 , "scripts": {
     "start": "./bin/spacemagic.js server"

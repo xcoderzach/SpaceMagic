@@ -11,8 +11,8 @@ Installation
 ```
 mkdir my_project
 cd my_project
-npm install spacemagic
-space-magic init my_project
+npm install SpaceMagic
+spacemagic init my_project
 ```
 
   Into your terminal

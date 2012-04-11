@@ -7,11 +7,11 @@
     "underscore": "1.2.x"
   , "moment": "1.5.x"
   , "less": "x.x.x"
-  , "live-document": "x.x.x"
-  , "space-magic": "x.x.x"
-  , "live-view": "x.x.x"
-  , "live-controller": "x.x.x"
-  , "asset-pipeline": "x.x.x"
+  , "LiveDocument": "x.x.x"
+  , "SpaceMagic": "x.x.x"
+  , "LiveView": "x.x.x"
+  , "LiveController": "x.x.x"
+  , "AssetPipeline": "x.x.x"
   }
 
 , "scripts": {                                                                                                                                                                               

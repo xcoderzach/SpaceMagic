@@ -7,11 +7,11 @@
     "underscore": "1.2.x"
   , "moment": "1.5.x"
   , "less": "x.x.x"
-  , "live-document": "git://github.com/xcoderzach/LiveDocument.git"
-  , "space-magic": "git://github.com/xcoderzach/SpaceMagic.git"
-  , "live-view": "git://github.com/xcoderzach/LiveView.git"
-  , "live-controller": "git://github.com/xcoderzach/LiveController.git"
-  , "asset-pipeline": "git://github.com/xcoderzach/AssetPipeline.git"
+  , "LiveDocument": "x.x.x"
+  , "SpaceMagic": "x.x.x"
+  , "LiveView": "x.x.x"
+  , "LiveController": "x.x.x"
+  , "AssetPipeline": "x.x.x"
   }
 
 , "scripts": {                                                                                                                                                                               

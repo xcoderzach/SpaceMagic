@@ -1,45 +1,108 @@
 body {
-  padding-top: 30px;
+  padding-top: 48px;
+  background-color: #eff2ff;
 }
 
-.container  {
-  margin-left: 0px;
+h1, h2 {
+  font-family: 'Montserrat', sans-serif;
 }
 
-.row {
-  margin-left: 0px;
+a {
+  color: #BE2F33;
 }
 
-.toc {
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
-.toc ul {
-margin: 0;
-}
-
-.toc li a{
-  color: black;
-  
-}
-
-#toc .H1 {
+.superbig {
+  font-size: 120px;
+  line-height: 1;
   font-weight: bold;
-  text-decoration:underline;
-  margin: 15px 0px 0px 0px;
-  list-style-type: none;
+  }
+
+.big {
+  font-size: 60px;
+  line-height: 1;
+  margin-bottom: 18px;
 }
 
-#toc .H2 {
+.center {
+text-align: center;
+}
+
+header {
+}
+
+
+h3 {
+  margin-top: 18px;
+}
+
+.introduction {
+  margin-bottom: 18px;
+}
+
+.links {
+margin-bottom: 18px;
+}
+
+.linksHr {
+margin-bottom: 72px;
+}
+
+
+.grayButton {
+  -moz-border-bottom-colors: none;
+  -moz-border-image: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  border-color: #878787 #878787 #707070;
+  border-radius: 5px 5px 5px 5px;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: 0 4px 0 #5C5C5C;
+  color: #333333;
+  cursor: pointer;
+  font-size: 14px;
   font-weight: bold;
-  list-style-type: none;
-  margin-left: 10px;
+  margin: 0px 0px 0px 0px;
+  padding: 3px 5px 5px;
+  position: relative;
+  text-align: center;
+  top: 0;
+background-image: linear-gradient(top, rgb(242,240,245) 43%, rgb(220,227,227) 72%);
+background-image: -o-linear-gradient(top, rgb(242,240,245) 43%, rgb(220,227,227) 72%);
+background-image: -moz-linear-gradient(top, rgb(242,240,245) 43%, rgb(220,227,227) 72%);
+background-image: -webkit-linear-gradient(top, rgb(242,240,245) 43%, rgb(220,227,227) 72%);
+background-image: -ms-linear-gradient(top, rgb(242,240,245) 43%, rgb(220,227,227) 72%);
+
+background-image: -webkit-gradient(
+	linear,
+	left top,
+	left bottom,
+	color-stop(0.43, rgb(242,240,245)),
+	color-stop(0.72, rgb(220,227,227))
+);
 }
 
-#toc .H3 {
-  margin-left: 20px;
-  list-style-type: circle;
+.grayButton a:hover {
+  text-decoration: none;
 }
 
-
+.grayButton:hover {
+  top: 2px;
+  -moz-box-shadow: 0px 3px 0px #4e820a;
+  -webkit-box-shadow: 0px 3px 0px #4e820a;
+  box-shadow: 0px 3px 0px #5C5C5C;
+  background: #FFFFFF;
+  text-decoration: none;
+  color: #333333;
+}
+.grayButton:active {
+    top: 6px;
+    -moz-box-shadow: 0px 0px 0px #B6FF57;
+    -webkit-box-shadow: 0px 0px 0px #B6FF57;
+    box-shadow: 0px 0px 0px #B6FF57;
+    -moz-box-shadow: inset 0px 0px 5px #5CCCCCC;
+    -webkit-box-shadow: inset 0px 0px 5px #CCCCCC;
+    box-shadow: inset 0px 0px 5px #CCCCCC;
+    background: #FFFFFF;
+}

@@ -1,0 +1,1006 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Spacemagic Init Successful</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
+
+    <style>
+      body {
+        padding-top: 30px;
+      }
+
+      .container  {
+        margin-left: 0px;
+      }
+
+      .row {
+        margin-left: 0px;
+      }
+
+      .toc {
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
+      .toc ul {
+      margin: 0;
+      }
+
+      .toc li a{
+        color: black;
+        
+      }
+
+      #toc .H1 {
+        font-weight: bold;
+        text-decoration:underline;
+        margin: 15px 0px 0px 0px;
+        list-style-type: none;
+      }
+
+      #toc .H2 {
+        font-weight: bold;
+        list-style-type: none;
+        margin-left: 10px;
+      }
+
+      #toc .H3 {
+        margin-left: 20px;
+        list-style-type: circle;
+      }
+    </style>
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="toc span3">
+          <!--Sidebar content-->
+        </div>
+        <div class="span8">
+<h1>Welcome to SpaceMagic</h1>
+<p>  SpaceMagic is a full-stack javascript web development framework which allows
+you to build fast, real-time web applications.  It allows you to write only
+one app and share it between the client and the server.
+
+</p>
+<h2>Installation</h2>
+<pre><code>npm install -g spacemagic
+spacemagic init myProject
+cd myProject
+npm install</code></pre>
+<h2>Configure</h2>
+<p>  You need to have mongodb installed, if you don&#39;t, go here
+<a href="http://www.mongodb.org/display/DOCS/Quickstart">MongoDB QuickStart Guide</a>
+
+</p>
+<p>  If you&#39;re already running MongoDB on localhost on the default port, you&#39;re done.
+But if you need to configure your database connection info goto the file:
+
+</p>
+<pre><code>vim config/database.js</code></pre>
+<h2>Next Steps</h2>
+<ul>
+<li>Checkout our Basic Todo Tutorial</li>
+<li>or the Chat Tutorial</li>
+<li>or the Micro Blogging tutorial</li>
+<li>or checkout the Guides</li>
+<li>or dive into the API documentation</li>
+</ul>
+<h2>High-level Overview</h2>
+<p>SpaceMagic is an MV* framework. Its main components are:
+
+</p>
+<ul>
+<li><a href="https://github.com/xcoderzach/LiveView">LiveView</a> - A pure, semantic HTML-based templating language.</li>
+<li><a href="https://github.com/xcoderzach/LiveDocument">LiveDocument</a> - A real-time client-server isomorphic ODM.</li>
+<li><a href="https://github.com/xcoderzach/LiveController">LiveController</a> - A tiny, client-side, pushState router. </li>
+<li><a href="https://github.com/xcoderzach/AssetPipeline">AssetPipeline</a> - A static asset provider with support for minification, javascript modules, and caching.</li>
+</ul>
+<h1>Views API</h1>
+<h2>View</h2>
+<h3>viewName</h3>
+<h5>View.viewName()</h5>
+<p>Returns name of view.
+
+</p>
+<h3>define</h3>
+<h5>View.define(name [, constructor])</h5>
+<p>Defines new view class with name <code>name</code> and optional constructor <code>constructor</code>.
+
+</p>
+<h3>template</h3>
+<h5>View.template(template)</h5>
+<p>Loads a template into the view. <code>template</code> is a string containing the URL of the template.
+
+</p>
+<h3>element</h3>
+<h5>View.element(selector, callback)</h5>
+<h5>View.element(callback)</h5>
+<p>When view is created, <code>callback</code> is called with first parameter element where element is the jQuery result of <code>selector</code>.
+
+</p>
+<h3>action</h3>
+<h5>View.action(actionSelector, callback)</h5>
+<p><code>actionSelector</code> is a string containing an event followed by a selector. (e.g.
+&quot;click .close&quot; or &quot;keypress .nameField&quot;) <code>callback</code> is called when the action
+is performed on the selector.
+
+</p>
+<p>The first argument for callback is the event object, the second parameter is the element.
+
+</p>
+<h3>title</h3>
+<h5>View.title(title)</h5>
+<p>Changes the browser title to <code>title</code> when view is loaded.
+
+</p>
+<h3>subView</h3>
+<h5>View.subView(selector, view, opts)</h5>
+<p>Specifies a view class which will be loaded as a sub view with <code>selector</code> indicating the template.
+
+</p>
+<h2>View Attributes</h2>
+<h3>this.model</h3>
+<p>Model that was passed into view.
+
+</p>
+<h3>this.view</h3>
+<p>LiveView instance generated from template.
+
+</p>
+<h3>this.parent</h3>
+<p>Parent view of the current view.
+
+</p>
+<h2>SingleView</h2>
+<p>SingleView has all the methods of view but, in addition, binds all key in model to the view.
+
+</p>
+<h3>map</h3>
+<h5>SingleView.map(key, mapper)</h5>
+<p>When <code>key</code> is loaded or changes on the model, calls <code>mapper</code> with the key and the value associated with the key, then sets key in the view to the return value of mapper.
+</p>
+<h6>TODO: make async.</h6>
+<h2>ListView</h2>
+<h3>beforeInsert</h3>
+<h5>ListView.beforeInsert(fn)</h5>
+<p>Runs <code>fn</code> before a new item is added to the list.
+
+</p>
+<p><code>fn</code>&#39;s arguments are: <code>model</code>, <code>view</code>, and <code>done</code>. Once <code>done</code> is called, <code>view</code> is appended to the DOM.
+
+</p>
+<h3>beforeRemove</h3>
+<h5>ListView.beforeRemove(fn)</h5>
+<p>Runs <code>fn</code> before a new item is removed from the list.
+
+</p>
+<p><code>fn</code>&#39;s arguments are: <code>model</code>, <code>view</code>, and <code>done</code>. Once <code>done</code> is called, <code>view</code> is removed from the DOM.
+
+</p>
+<h3>singleView</h3>
+<h5>ListView.singleView(view)</h5>
+<p><code>view</code> is the class to use for each view in the list.
+
+</p>
+<h2>FormView</h2>
+<h3>beforeSave</h3>
+<h5>FormView.beforeSave(fn)</h5>
+<p>Runs <code>fn</code> before form input is saved.
+
+</p>
+<h3>afterSave</h3>
+<h5>FormView.afterSave(fn)</h5>
+<p>Runs <code>fn</code> after form input is saved.
+
+</p>
+<h3>saveOnChange</h3>
+<h5>FormView.saveOnChange()</h5>
+<p>If called, this view will automatically save the model after any changes.
+
+</p>
+<h3>error</h3>
+<h5>FormView.error(field, errorMessages)</h5>
+<p>Displays an errorMessage when model invalidates the field <code>field</code>.
+
+</p>
+<h3>autoSave</h3>
+<h5>FormView.autoSave(timeout)</h5>
+<p>If called, this view will automatically save the model after <code>timeout</code> milliseconds without new changes.
+
+</p>
+<h1>LiveView API Documentation </h1>
+<h2>LiveView</h2>
+<h5>LiveView(template, data[, scope])</h5>
+<p>Constructs a new live view from a template. The <code>template</code> may be a template
+url, css selector, or html.  <code>data</code> refers to the data with which the live view
+is initialized. <code>scope</code> is an array of strings that describe the scope of the 
+live view variables. If omitted, LiveView will assume the default scope, &quot;main.&quot;
+
+</p>
+<h3>changeTemplate</h3>
+<h5>LiveView.changeTemplate(template)</h5>
+<p>Changes the template used by the live view to the one specified. This can be used to hotswap templates during development.
+</p>
+<h6>TODO: Make hotswapping possible</h6>
+<h3>find</h3>
+<h5>LiveView.find(selector)</h5>
+<p>Returns elements that match selector. Finds elements in current view as well as elements in any polymorphic subviews.
+
+</p>
+<h3>set</h3>
+<h5>LiveView.set(name, value)</h5>
+<h5>LiveView.set(JSONObject)</h5>
+<p>Sets the value or values of an element <code>name</code> to <code>value</code>. If a single object is passed, set each key in <code>JSONObject</code> to its value.
+
+</p>
+<pre><code class="html">&lt;div class=&quot;post&quot;&gt;&lt;/div&gt;</code></pre>
+<pre><code class="javascript">LiveView.set(&quot;post&quot;, &quot;An angry comment about your taste in movies.&quot;)</code></pre>
+<p>If live view was constructed with scopes, you can do the following:
+
+</p>
+<pre><code class="html">&lt;div class = &quot;title&quot;&gt;&lt;/div&gt;
+&lt;div class = &quot;postTitle&quot;&gt;&lt;/div&gt;</code></pre>
+<pre><code class="javascript">var view = new LiveView(&quot;template.html&quot;, {})
+view.set(&quot;title&quot;, &quot;Another post.&quot;)</code></pre>
+<p>This will set both .title and .postTitle, this can be used to disambiguate classes in subViews.
+
+</p>
+<h3>remove</h3>
+<h5>LiveView.remove()</h5>
+<p>Removes the live view, as well as all associated events, from the document.
+
+</p>
+<h3>detach</h3>
+<h5>LiveView.detach()</h5>
+<p>Removes the live view from the document while leaving events intact.
+
+</p>
+<h3>attach</h3>
+<h5>LiveView.attach(container)</h5>
+<p>Attaches live view to a particular container.
+
+</p>
+<h2>LiveViewCollection</h2>
+<h3>showLoading</h3>
+<h5>LiveViewCollection.showLoading()</h5>
+<p>Appends a special loading element to the end of the collection if any such element exists.
+
+</p>
+<h3>hideLoading</h3>
+<h5>LiveViewCollection.hideLoading()</h5>
+<p>Removes the special loading element from the collection.
+
+</p>
+<h3>get</h3>
+<h5>LiveViewCollection.get(id)</h5>
+<p>Returns the view at index <code>id</code> in the collection.
+
+</p>
+<h3>length</h3>
+<h5>LiveViewCollection.length()</h5>
+<p>Returns the number of LiveViews in the collection.
+
+</p>
+<h3>remove</h3>
+<h5>LiveViewCollection.remove(id)</h5>
+<p>Removes a live view from the collection. Appends special empty view (if one is
+defined) if last view is removed.
+
+</p>
+<h3>removeAll</h3>
+<h5>LiveViewCollection.removeAll()</h5>
+<p>Removes all live views from the collection, appends special empty view if one
+exists.
+
+
+</p>
+<h3>insert</h3>
+<h5>LiveViewCollection.insert(document, index)</h5>
+<p>Inserts a new view at the <code>index</code> or, if no <code>index</code> is specified, the end of
+the live view collection.  Returns a new live view when completed.
+
+</p>
+<h3>append</h3>
+<h5>LiveViewCollection.append(data)</h5>
+<p>Inserts a view or each of an array of views into the live view collection.
+</p>
+<h1>LiveDocument API</h1>
+<h2>Document Definition Methods</h2>
+<p>  Model Definition Methods are the methods that you use to define the schema
+and other properties of your documents.   These methods allow you to describe
+keys on your documents, as well as validations and associations.
+
+</p>
+<h3>key</h3>
+<h4>Document.key(name, [properties])</h4>
+<p>  To add properties to your document, use the <code>key</code> method.  The <code>name</code> is a
+<code>String</code> which describes a property that will exist in instances of this
+<code>Document</code>.
+
+</p>
+<pre><code class="javascript">module.exports = Document(&quot;Post&quot;)
+  .key(&quot;title&quot;)
+  .key(&quot;body&quot;, {required: false})</code></pre>
+<p>The following are the optional properties of a key
+
+</p>
+<ul>
+<li><p><code>required</code>: Determines whether a user must set a value for this key in
+order for the document to save.</p>
+</li>
+<li><p><code>default</code>: The default value of this key if none is set.</p>
+</li>
+</ul>
+<p>You can also specify validations for a key.  To see a list of validations, and
+how to make your own custom validations, see the
+<a href="/validations.html">validations</a> page.
+
+</p>
+<h3>timestamps</h3>
+<h4>Document.timestamps()</h4>
+<p>  The <code>timestamps</code> method will give your document <code>createdAt</code> and <code>updatedAt</code>
+timestamps.  The timestamps will be created and updated automatically.
+The format of a timestamp is a unix timestamp, specifically the result
+of calling <code>(new Date).getTime()</code>
+
+</p>
+<p>To access the timestamps you can call <a href="/api.html#get">get(&quot;createdAt&quot;) or get(&quot;updatedAt&quot;)</a>
+
+</p>
+<pre><code class="javascript">module.exports = Document(&quot;Post&quot;)
+  //define the rest of your keys
+  .timestamps()</code></pre>
+<h3>getKey</h3>
+<h4>Document.getKey(name, watchFields, valueFn)</h4>
+<p>  The <code>getKey</code> method defines a dynamic key whose value is determined by the
+return value of valueFn.
+
+</p>
+<p>  A change event &quot;change:name&quot; will be called when any of the fields listed in
+watchFields changes.
+
+</p>
+<pre><code class="javascript">User = Document(&quot;User&quot;)
+  .getKey(&quot;fullName&quot;, [&quot;first&quot;, &quot;last&quot;], function () {
+    return this.get(&quot;first&quot;) + &quot; &quot; + this.get(&quot;last&quot;)
+  })</code></pre>
+<h3>setKey</h3>
+<h4>Document.setKey(name, fn)</h4>
+<p>  The setKey method allows you to define behavior when a key is set.
+
+</p>
+<p>  The following example sets the first and last name property when
+a user calls the <code>.set</code> method.
+
+
+</p>
+<pre><code class="javascript">module.exports = Document(&quot;Post&quot;)
+  //define the rest of your keys
+  .setKey(&quot;name&quot;, function(name) {
+    name = name.split(&quot; &quot;)      
+    this.set(&quot;first&quot;, name[0])
+    this.set(&quot;last&quot;, name[1])
+  })</code></pre>
+<h2>Document Hook Methods</h2>
+<p>  These methods register a handler to be called before or after
+some action is performed on a document.
+
+</p>
+<p>In each of these methods, <code>fn</code> takes two arguments:
+
+</p>
+<ul>
+<li><p><code>instance</code> - The instance of the document</p>
+</li>
+<li><p><code>done</code> - A function to be called when your handler is finished.  If anything is
+passed to done in a before filter, the document will not save and whatever was
+passed to done will be emitted as the first argument to the <code>&quot;error&quot;</code> event.</p>
+</li>
+</ul>
+<pre><code class="javascript">module.exports = Document(&quot;Post&quot;)
+  .beforeSave(function(post, done) {
+    post.isUnique(&quot;title&quot;, function(isUnique) {
+      if(!isUnique) {
+        done(new Error(&quot;title isn&#39;t unique&quot;))
+      } else {
+        done()
+      }
+    })
+  })</code></pre>
+<h3>beforeSave</h3>
+<h4>Document.beforeSave(fn)</h4>
+<p>  This is called before updating or creating a document.  It is
+called on the client and the server.
+
+</p>
+<h3>serverBeforeSave</h3>
+<h4>Document.serverBeforeSave(fn)</h4>
+<p>  This is called before updating or creating a document.  It is
+called on the server.
+
+</p>
+<h3>clientBeforeSave</h3>
+<h4>Document.clientBeforeSave(fn)</h4>
+<p>  This is called before updating or creating a document.  It is
+called on the client.
+
+</p>
+<h3>beforeCreate</h3>
+<h4>Document.beforeCreate(fn)</h4>
+<p>  This is called before creating a document on the both client and the server.
+
+</p>
+<h3>serverBeforeCreate</h3>
+<h4>Document.serverBeforeCreate(fn)</h4>
+<p>  This is called before creating a document on the the server.
+
+</p>
+<h3>clientBeforeCreate</h3>
+<h4>Document.clientBeforeCreate(fn)</h4>
+<p>  This is called before creating a document on the the client.
+
+</p>
+<h3>afterSave</h3>
+<h4>Document.afterSave(fn)</h4>
+<p>  This is called after creating or updating a document on the both client and the server.
+
+</p>
+<h3>serverAfterSave</h3>
+<h4>Document.serverAfterSave(fn)</h4>
+<p>  This is called after creating or updating a document on the server.
+
+</p>
+<h3>afterRemove</h3>
+<h4>Document.afterRemove(fn)</h4>
+<p>  This is called after removing a document on the client or server.
+
+</p>
+<h3>serverAfterRemove</h3>
+<h4>Document.serverAfterRemove(fn)</h4>
+<p>  This is called after removing a document on the server.
+
+</p>
+<h2>Document Association Methods</h2>
+<p>  Associations provide a way to model relationships between your documents.
+For example, <code>blogPosts</code> might have many <code>comments</code> and a <code>blogPost</code> might
+belongTo an <code>author</code> or an <code>author</code> might have one <code>profile</code>.
+
+</p>
+<p>  <strong>NOTE</strong>: A quick note about cyclic dependencies.  If two documents have each
+other as associations, i.e. one belongs to another, then we need to do
+the following:
+
+</p>
+<pre><code class="javascript">
+//comment.js
+var Comment = Document(&quot;Comment&quot;)
+  , Post = require(&quot;./post&quot;)
+
+Comment
+  .belongsTo(Post)
+
+var Post = Document(&quot;Post&quot;)
+  , Comment = require(&quot;./comment&quot;)
+
+Post
+  .many(Comment)</code></pre>
+<h3>many</h3>
+<h4>Document.many(associatedModel[, opts])</h4>
+<p>  A <code>many</code> association describes a one-to-many association between
+documents.
+
+</p>
+<p>  The <code>associatedModel</code> argument is the Document which we are associating.
+
+</p>
+<pre><code class="javascript">var Comment = require(&quot;./comment&quot;)
+
+module.exports = Document(&quot;Post&quot;)
+  .many(Comment)</code></pre>
+<p>Opts accepts the following options: 
+
+</p>
+<ul>
+<li><p><code>dependent</code> - Specifies whether the associated document should be
+deleted when this document is deleted, defaults to <code>false</code></p>
+</li>
+<li><p><code>foreignKey</code> - The foreignKey on the associated document.  Defaults
+to <code>documentNameId</code> (e.g. a comment with a post will have the key, postId) </p>
+</li>
+<li><p><code>as</code> - The name of the association, if you want to refer to a post&#39;s
+comments as <code>messages</code>, you would pass <code>{ as: &quot;message&quot; }</code>.</p>
+</li>
+<li><p><code>conditions</code> - An list of conditions the associated documents will be
+queried with.</p>
+</li>
+</ul>
+<h3>one</h3>
+<h4>Document.one(associatedModel[, opts])</h4>
+<p>  A <code>one</code> association describes a one-to-one association between two
+documents.
+
+</p>
+<p>  associatedModel is the Document which we are associating.
+
+</p>
+<pre><code class="javascript">var Profile = require(&quot;./profile&quot;)
+
+module.exports = Document(&quot;User&quot;)
+  .one(Profile)</code></pre>
+<p>Opts accepts the following options: 
+
+</p>
+<ul>
+<li><p><code>dependent</code> - Specifies whether the associated document should be
+deleted when this document is deleted, defaults to <code>false</code></p>
+</li>
+<li><p><code>foreignKey</code> - The foreignKey on the associated document.  Defaults
+to <code>documentNameId</code> (e.g. an author with a profile will have the key, authorId) </p>
+</li>
+<li><p><code>as</code> - The name of the association, if you want to refer to a user&#39;s
+profile as <code>bio</code>, you would pass <code>{ as: &quot;bio&quot; }</code>.</p>
+</li>
+</ul>
+<h3>belongsTo</h3>
+<h4>Document.belongsTo(associatedModel[, opts])</h4>
+<p>  A <code>belongsTo</code> association describes a one-to-one or one-to-many association
+where the document belongs to (has the foriegn key of) another document.  For
+example, <code>comments</code> belong to a <code>blogPost</code>, a <code>profile</code> belongs to a <code>user</code>.
+
+</p>
+<p>  It specifies the reverse association of <code>one</code> and <code>many</code>.
+
+</p>
+<pre><code class="javascript">var Post = require(&quot;./post&quot;)
+module.exports = Document(&quot;Comment&quot;)
+  .belongsTo(Post)</code></pre>
+<h2>Document Helper Methods</h2>
+<h3>find</h3>
+<h4>Document.find(query[, callback])</h4>
+<p>  The <code>find</code> method takes in a query and returns a <code>Collection</code>.
+A query is simply a mongodb query object.
+
+</p>
+<p>See <a href="http://www.mongodb.org/display/DOCS/Advanced+Queries">this page</a> for more on queries.
+
+
+</p>
+<p>  Here is an example that will find all posts with 100 or more votes.
+</p>
+<pre><code class="javascript">//post.js
+module.exports = Document(&quot;Post&quot;)
+  .key(&quot;votes&quot;)
+
+var post = Post.find({votes: { $gt: 100 })</code></pre>
+<h3>findOne</h3>
+<h4>Document.findOne(id[, callback])</h4>
+<p>  <code>findOne</code> takes in an <code>_id</code>, and finds a document with that id.  The document is
+returned immediatly, however none of it&#39;s properties are actually set.  However
+you can, and should, pass it to the view immediatly.  The document will fire
+<a href="/document-events">events</a> as it&#39;s state changes (i.e. when it loads, or
+
+</p>
+<p>  If you do for some reason need to wait for the post to load first, you can
+
+</p>
+<p>pass in a callback as the second argument to findOne, or pass a callback to the
+<code>.load</code> method on the returned instance.  
+
+</p>
+<pre><code class="javascript">//post.js
+module.exports = Document(&quot;Post&quot;)
+
+//myCode.js
+var Post = require(&quot;./post&quot;)
+
+var post = Post.findOne(&quot;4f7580a64e822029b7000001&quot;)</code></pre>
+<h3>findByKey</h3>
+<h4>Document.findByKey(key, value[, callback])</h4>
+<p>Finds the document in which <code>key</code> equals <code>value</code>, there should
+only be one document where <code>key</code> equals <code>value</code>. i.e. <code>value</code>
+should be unique.
+
+</p>
+<pre><code class="javascript">//user.js
+module.exports = Document(&quot;User&quot;)
+  .key(&quot;email&quot;)
+
+var user = User.findByKey(&quot;email&quot;, &quot;x.coder.zach[At]gmail.com&quot;)</code></pre>
+<p>This example finds a user by email address.
+
+</p>
+<h3>create</h3>
+<h4>Document.create(document[, callback])</h4>
+<p>This is simply a utility method for the following:
+
+</p>
+<pre><code class="javascript">module.exports = Document(&quot;User&quot;)
+  .key(&quot;name&quot;)
+  .key(&quot;email&quot;)
+
+var user = User.create({ name: &quot;Zach&quot;, email: &quot;x.coder.zach[At]gmail.com&quot; })
+
+//this is equivelent to 
+
+var user = new User({ name: &quot;Zach&quot;, email: &quot;x.coder.zach[At]gmail.com&quot; })
+user.save()</code></pre>
+<h2>Document Instance Methods</h2>
+<h3>constructor</h3>
+<h4>Document(JSONDocument[, options])</h4>
+<p>Constructs a new document instance.
+
+</p>
+<p>Options:
+  <em> validate - defaults to <code>true</code>. Specifies whether to value the contents of the JSONDocument.
+  </em> noId - defaults to <code>false</code>. If <code>noId</code> is <code>true</code>, constructor does not generate an id.
+
+</p>
+<h3>set</h3>
+<h4>Document.prototype.set(properies[, options])</h4>
+<h4>Document.prototype.set(key, value[, options])</h4>
+<p>Sets the value of <code>key</code> to <code>value</code>. If the first parameter is an object, sets the value of each <code>key</code> in the document to its <code>value</code>.
+
+</p>
+<h3>get</h3>
+<h4>Document.prototype.get(key)</h4>
+<p>Gets the value of the <code>key</code>.
+
+</p>
+<h3>assoc</h3>
+<h4>Document.prototype.assoc(name[, callback])</h4>
+<p>Returns associated document or collection. <code>callback</code> is called once association is loaded.
+
+</p>
+<h3>keys</h3>
+<h4>Document.prototype.keys()</h4>
+<p>Returns a list of the keys this document has.
+
+</p>
+<h3>save</h3>
+<h4>Document.prototype.save([callback])</h4>
+<p>If the document does not exist, creates the document. If the document already exists, saves the document.
+
+</p>
+<h3>remove</h3>
+<h4>Document.prototype.remove([callback])</h4>
+<p>Removes the document from the DB. Callback is called once document has been removed successfully.
+
+</p>
+<h3>manyAssocs</h3>
+<h4>Document.prototype.manyAssocs()</h4>
+<p>Returns a list of the many associations this document has.
+
+</p>
+<pre><code class="javascript">module.exports = Document(&quot;Post&quot;)
+  .many(&quot;comments&quot;)
+
+
+var post = new Post()
+post.manyAssocs() // [&quot;comments&quot;]</code></pre>
+<h3>oneAssocs</h3>
+<h4>Document.prototype.oneAssocs()</h4>
+<p>This is the names of one assocs, as well as belongsTo assocs, since they both
+point to one document.
+
+</p>
+<pre><code class="javascript">module.exports = Document(&quot;Post&quot;)
+  .one(&quot;thing&quot;)
+  .belongsTo(&quot;author&quot;)
+
+
+var post = new Post()
+post.oneAssocs() // [&quot;thing&quot;, &quot;author&quot;]</code></pre>
+<h3>assocs</h3>
+<h4>Document.prototype.assocs()</h4>
+<p>  Returns a list of the names of all associations for this document.
+
+</p>
+<pre><code class="javascript">module.exports = Document(&quot;Post&quot;)
+  .many(&quot;comments&quot;)
+  .belongsTo(&quot;author&quot;)
+
+
+var post = new Post()
+post.assocs() // [&quot;comments&quot;, &quot;author&quot;]</code></pre>
+<h3>validate</h3>
+<h4>Document.prototype.validate([callback, opts])</h4>
+<p>Forces the document to validate.  This method is called automatically
+everytime a value is changed with .set().  This will emit <code>valid</code> or
+<code>invalid</code> events.
+
+</p>
+<pre><code class="javascript">var post = new Post()
+post.on(&quot;invalid&quot;, function() {
+
+})
+post.validate(function(post, invalidFields) {
+
+})</code></pre>
+<h3>validateField</h3>
+<h4>Document.prototype.validateField(field[, callback, opts])</h4>
+<p>Validates the contents of a specified <code>field</code>. <code>callback</code> is called when finished. If the field is invalid, the second parameter to <code>callback</code> will be a list of failed validations.
+
+</p>
+<p>Options:
+  * silent - If true, doesn&#39;t emit an event.
+
+</p>
+<h3>isUnique</h3>
+<h4>Document.prototype.isUnique(field, value, callback)</h4>
+<p>Calls callback with <code>true</code> as the first argument if the field is
+unique, otherwise it calls it with <code>false</code>
+
+</p>
+<pre><code class="javascript">  Post.isUnique(&quot;email&quot;, &quot;x.coder.zach{At}gmail.com&quot;, function(isUnique) {
+    isUnique //true if is unique, false otherwise.            
+  })</code></pre>
+<p>  You can Define your own instance methods like so:
+</p>
+<pre><code class="javascript">  //Every type of document will get this method
+  Document.prototype.myMethod = function() {
+
+  }
+
+  //Just Posts will get this method
+  Post.prototype.myMethod = function() {
+
+  }</code></pre>
+<h2>Document Instance Events</h2>
+<p>  There are a lot of events a document can emit as it&#39;s state changes.
+Here&#39;s a list of all of them in one place, so you don&#39;t have to hunt around.
+
+</p>
+<p>  The first argument for all event callbacks is the instance itself, all event
+  handlers are bound to the instance.
+
+</p>
+<h3>&quot;saving&quot;</h3>
+<p>  Emitted when the document starts saving.
+
+</p>
+<h3>&quot;saved&quot;</h3>
+<p>  Emitted when the document finishes saving.
+
+</p>
+<h3>&quot;load&quot;</h3>
+<p>  Emitted once the document has loaded.
+
+</p>
+<h3>&quot;change&quot;</h3>
+<p>  Emitted when a field on the document changes.
+  The second parameter is a list of fields that changed.
+
+</p>
+<h3>&quot;change:field&quot;</h3>
+<p>  Emitted when field, <code>field</code>, on the document changes.
+  The second parameter is the new value of the field,
+  the third parameter is the old value.
+
+</p>
+<h3>&quot;delete&quot;</h3>
+<p>  Emitted when the document is deleted.
+
+</p>
+<h3>&quot;notExist&quot;</h3>
+<p>  Emitted when the document in the database that this document refers to
+doesn&#39;t actually exist.
+
+</p>
+<h3>&quot;invalid&quot;</h3>
+<p>  Emitted when a document becomes invalid, this happens as soon as set is
+called with invalid data, in order to do responsive real-time error reporting.
+
+</p>
+<h3>&quot;invalid:field&quot;</h3>
+<p>  Emitted when a field, <code>field</code> in the document becomes invalid, this happens
+  as soon as set is called with invalid data, in order to do responsive
+  real-time error reporting.
+
+</p>
+<h3>&quot;valid&quot;</h3>
+<p>  Emitted when new data is validated and is in fact valid.
+
+</p>
+<h3>&quot;valid:field&quot;</h3>
+<p>  Emitted when a particular field is validated and is in fact valid.
+
+</p>
+<h3>&quot;error&quot;</h3>
+<p>  Emitted when there is an error with the document, right now this only
+happens when an error is passed into the done method of after save.
+</p>
+<h1>LiveController API Documentation</h1>
+<h3>Controller</h3>
+<h5>LiveController.Controller(base, scope)</h5>
+<p><code>base</code> is a string the URL over which the controller acts. (ex. &quot;/posts&quot;)
+<code>scope</code> is a function in which routes are defined.
+
+</p>
+<pre><code class="javascript">controller = new LiveController(&quot;/posts&quot;, function(app) {
+  app.get(&quot;/show/:id&quot;, function() {
+    //do stuff
+  })
+})</code></pre>
+<h3>navigate</h3>
+<h5>LiveController.navigate(url, opts)</h5>
+<p>Navigates to the specified <code>url</code>.
+
+</p>
+<p>Options:
+  <em> method - accepts strings <code>push</code> and <code>reload</code>. <code>push</code> is used by default. 
+    </em> push - (default) use history.pushState to navigate without refreshing the page.
+    * refresh - uses document.location to navigate by refreshing page, included for older browser support.
+
+</p>
+<h3>get</h3>
+<h5>scope.get(route, callback)</h5>
+<p><code>route</code> is the route for a particular view. <code>callback</code> is the function in which
+the view is created.
+
+</p>
+<pre><code class="javascript">LiveController.get(&quot;/&quot;, function() {
+  //do stuff
+})</code></pre>
+<h3>before</h3>
+<h5>scope.before(fn)</h5>
+<p><code>fn</code> is run before the controller gets a route.
+
+
+</p>
+<h3>after</h3>
+<h5>scope.after(fn)</h5>
+<p><code>fn</code> is run after the controller gets a route.
+</p>
+<h1>AssetPipeline API</h1>
+<h2>AssetPipe</h2>
+<h3>script</h3>
+<h5>AssetPipe.script()</h5>
+<p>Returns a new script pipeline.
+
+</p>
+<h3>image</h3>
+<h5>AssetPipe.image()</h5>
+<p>Returns a new image pipeline.
+
+</p>
+<h3>stylesheet</h3>
+<h5>AssetPipe.stylesheet()</h5>
+<p>Returns a new stylesheet pipeline.
+
+</p>
+<h3>html</h3>
+<h5>AssetPipe.html()</h5>
+<p>Returns a new html pipeline.
+
+</p>
+<h2>Pipeline</h2>
+<h3>root</h3>
+<h5>Pipeline.root(directory)</h5>
+<p><code>root</code> is the root directory from which the assets will be served. Used to translate URLs to file names.
+
+</p>
+<h3>fileExtension</h3>
+<h5>Pipeline.fileExtension(extension)</h5>
+<p><code>extension</code> refers to the file extension of the assets which will be served.
+
+</p>
+<pre><code class="javascript">Pipe
+  .fileExtension(&quot;coffee&quot;)</code></pre>
+<p>This will serve CoffeeScript files.
+
+</p>
+<h3>urlExtension</h3>
+<h5>Pipeline.urlExtension(extension)</h5>
+<p><code>extension</code> refers to the file extension on the requested URL.
+
+</p>
+<pre><code class="javascript">Pipe
+  .fileExtension(&quot;coffee&quot;)
+  .urlExtension(&quot;js&quot;)
+  .process(coffee)</code></pre>
+<p>This will serve CoffeeScript files compiled as JavaScript.
+
+</p>
+<h3>addFiles</h3>
+<h5>Pipeline.addFiles(file)</h5>
+<p><code>file</code> is a string. If <code>file</code> contains a filename, that filename will be served. If it contains a directory name, all files within that directory, and all subdirectories, will be served.
+
+</p>
+<h3>process</h3>
+<h5>Pipeline.process(processor)</h5>
+<p><code>processor</code> is a function that processes assets accessed through the pipeline in some way. (e.g. processing CoffeeScript to JavaScript or less into css.)
+
+</p>
+<h2>Processor</h2>
+<p>There are several built-in processors:
+
+</p>
+<h3>coffeescript</h3>
+<p>This processor compiles CoffeeScript into JavaScript.
+
+</p>
+<pre><code class="javascript">Pipe
+  .process(require(&quot;AssetPipeline/lib/processors/coffeescript&quot;))</code></pre>
+<h3>less</h3>
+<p>This processor parses LESS into CSS. By default, the LESS processor includes bootstrap in its paths, so you can @import any default bootstrap stylesheets.
+
+</p>
+<pre><code class="javascript">Pipe
+  .process(require(&quot;AssetPipeline/lib/processors/less&quot;))</code></pre>
+<h3>stylus</h3>
+<p>This processor parses Stylus into CSS. It includes stylus-blueprint and nib by default.
+
+</p>
+<pre><code class="javascript">Pipe
+  .process(require(&quot;AssetPipeline/lib/processors/stylus&quot;))</code></pre>
+<h3>module</h3>
+<p>This processor wraps javascript files in commonjs modules.
+
+</p>
+<pre><code class="javascript">module = require(&quot;AssetPipeline/lib/processors/modules&quot;)
+Pipe
+  .process(module(baseURL, aliases))</code></pre>
+<p><code>baseURL</code> refers to the root URL from which modules will be requirable.
+<code>aliases</code> refers to a map of module name aliases.
+
+</p>
+<h3>strip code</h3>
+<p>This processor strips arguments out of function calls where the function name begins with <code>server</code>.
+
+</p>
+<pre><code class="javascript">Pipe
+  .process(require(&quot;AssetPipeline/lib/processors/strip_code&quot;))</code></pre>
+
+        </div>
+      </div>
+    </div> <!-- /container -->
+    <script src="http://twitter.github.com/bootstrap/assets/js/jquery.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-transition.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-alert.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-modal.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-scrollspy.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tab.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tooltip.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-popover.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-button.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-collapse.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-carousel.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-typeahead.js"></script>
+    <script>
+    window.onload = function () {
+    $(".toc").prepend("<h2>SpaceMagic</h2><br ><i class=icon-download></i><a href=https://github.com/xcoderzach/SpaceMagic>Git Repository</a>")}
+    $(".toc").append("<ul id=toc></ul>")
+    var TOC = $("ul#toc");
+    $.each($("h2:contains(Table of Contents)"), function(i,e){
+      $(e).next.remove
+      $(e).remove
+    })
+    $.each($("h1, h2, h3"), function(i, e) {
+    var heading = $(e);
+    var headingText = $(e).text();
+    var headingNumber = e.tagName.substring(1)
+    var headingID = headingText.replace(/[^a-z0-9]/gi, "_").toLowerCase() + i;
+    $(e).attr("id", headingID);
+    TOC.append("<li class=\"H" + headingNumber + "\"><a href=\"#" + headingID +"\">"  + headingText + "</a></li>" )
+  });
+  // Put a title on the table of contents
+    </script>
+  </body>
+</html>

@@ -72,8 +72,14 @@ SingleView has all the methods of view but, in addition, binds all key in model 
 
 #####SingleView.map(key, mapper)
 
-When `key` is loaded or changes on the model, calls `mapper` with the key and the value associated with the key, then sets key in the view to the return value of mapper.
-######TODO: make async.
+When `key` is loaded or changes on the model, calls `mapper` with the key and
+the value associated with the key, and a `set` function as a parameter. 
+
+```javascript
+.map("votes", function(key, value, set) {
+  set("plusTenVotes", value + 10)
+})
+```
 
 ##ListView
 

@@ -49,7 +49,7 @@ module.exports = Document.define("Task")
   .key("title")
   .key("votes")
   .key("done") </code></pre>
-            <h3>This is the controller. Just supply a view and a route and you're ready to go. (/app/controllers/application_controller.js)</h3>
+            <h3>All you need to define route, sort tasks by votes (descending). (/app/controllers/application_controller.js)</h3>
            <pre><code class="javascript">var TaskListView = require("../views/tasks/list")
   , Task = require("../models/task")
   , Controller = require("LiveController/lib/live_controller").Controller
@@ -57,7 +57,7 @@ module.exports = Document.define("Task")
 Controller("/", function(app) {
   app.get(function() {
     var tasks = Task.find()
-    tasks.sortBy("votes")
+    tasks.sortBy("votes", true)
     this.view = new TaskListView(tasks)
   })
 })</code></pre>
@@ -102,11 +102,27 @@ module.exports = View.define("NewTaskView")
 
     event.preventDefault()
   })</code></pre>
-
-
-          </div>
-  <div class="span6">
-    <img src="assets/img/WEBAPP.PNG" class="span6">
+  <h3>Throw down some HTML</h3>
+  <pre><code>&lt;section&gt;
+  &lt;ul class = &quot;tasks&quot;&gt;
+    &lt;li class = &quot;task&quot;&gt;
+      &lt;div class = &quot;upVote&quot;&gt;&lt;/div&gt;
+      &lt;div class = &quot;votes&quot;&gt;0&lt;/div&gt;
+      &lt;div class = &quot;downVote&quot;&gt;&lt;/div&gt;
+      &lt;div class = &quot;title&quot;&gt;&lt;/div&gt;
+      &lt;input type = &quot;checkbox&quot; class = &quot;done&quot;&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;form id = &quot;newTaskForm&quot;&gt;
+    &lt;input type = &quot;text&quot; name = &quot;task[title]&quot; /&gt;
+    &lt;input type = &quot;submit&quot; value=&quot;Add Task&quot;/&gt;
+  &lt;/form&gt;
+&lt;/section&gt;</code></pre>
+  <h3>Done. Welcome to your new, realtime to-do list. Style or further mark it up however you want.</h3>
+  </div>
+  <div class="span5 offset1">
+    <iframe class="todoContainer" src="http://165.225.128.119/todo" frameborder="0" height="600px" width="415px" scrolling="no"></iframe>
+    <p>NOTE: Not intended to be an example of good UX design.</p>
   </div>
   </div>
   <hr>

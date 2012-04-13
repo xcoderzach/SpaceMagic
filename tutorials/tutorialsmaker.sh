@@ -38,7 +38,9 @@ marked --gfm allthedocs.md >> index.html
 echo '
           </div>
           <div class="span5 offset1">
-            <iframe src="http://165.225.128.119" frameborder="0" height="600px" width="415px" scrolling="no"></iframe>
+            <h3>Styled, task-limited version of the tutorial app:</h3>
+            <iframe src="http://165.225.128.119/todo" frameborder="0" height="600px" width="415px" scrolling="no"></iframe>
+            <p>NOTE: Not intended to be an example of good UX design.</p>
           </div>
         </div>
         </div>

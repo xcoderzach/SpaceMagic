@@ -1,8 +1,7 @@
 Getting Started
 ===============
 
-  If you're new to SpaceMagic and don't even know what it is, read the
-introductory blog post here.
+  If you're new to SpaceMagic and don't even know what it is go to http://spacemagic.io.
 
 Installation
 ------------

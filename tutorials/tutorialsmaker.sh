@@ -11,7 +11,7 @@ echo '
     <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
     <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
-    <link href="../assets/css/style.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -19,14 +19,14 @@ echo '
   </head>
   <body>
     <div class="container">
-       <header>
+      <header>
         <h1 class="superbig"><a href="/">SPACE MAGIC</a></h1>
-        <h2>Pragmatic webdev for node. v0.0.0</h2>
+        <h2>Dead-simple real-time webdev for node. v0.0.0</h2>
       </header>
       <div class="row links">
-        <div class="span3"><h3><img src="/assets/img/icon-github.png"> <a href="http://github.com/xcoderzach/spacemagic">Visit our GitHub Repo</a></h3></div>
-        <div class="span3 center"><h3><a href="/tutorials">View Tutorials</a></h3></div>
-        <div class="span3 center"><h3><a href="/docs">Read API Docs</a></h3></div>
+        <div class="span3 center"><h3><img src="/assets/img/icon-github.png"> <a href="http://github.com/xcoderzach/spacemagic">Follow us on GitHub!</a></h3></div>
+        <div class="span3 center"><h3><a href="/tutorials">Tutorials</a></h3></div>
+        <div class="span3 center"><h3><a href="/docs">Documentation</a></h3></div>
         <div class="span3 center"><h3><a href="/about.html">About SpaceMagic</a></h3></div>
       </div>
       <hr class="linksHr">
@@ -45,6 +45,9 @@ echo '
         </div>
         </div>
       </div>
+      <footer>
+        <p><a href="http://github.com/ebutleriv">Eugene Butler</a> (eugene@eugene4.com) and <a href="http://github.com/xcoderzach">Zach Smith</a> (x.coder.zach@gmail.com).</p>
+      </footer>
     </div> <!-- /container -->
     <script src="http://twitter.github.com/bootstrap/assets/js/jquery.js"></script>
     <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-transition.js"></script>

@@ -19,14 +19,14 @@
     <div class="container">
       <header>
         <h1 class="superbig"><a href="/">SPACE MAGIC</a></h1>
-        <h2>Pragmatic webdev for node. v0.0.0</h2>
+        <h2>Dead-simple real-time webdev for node. v0.0.0</h2>
         <div class="row">
           <h3 class="span12 introduction">SpaceMagic is a full-stack javascript web development framework which allows you to build fast, real-time web applications. It allows you to write only one app and share it between the client and the server.</h3>
         </div>
       </header>
       <div class="row links">
-        <div class="span3"><h3><img src="/assets/img/icon-github.png"> <a href="http://github.com/xcoderzach/spacemagic">Visit our GitHub Repo</a></h3></div>
-        <div class="span3 center"><h3><a href="/tutorials">View Tutorials</a></h3></div>
+        <div class="span3 center"><h3><img src="/assets/img/icon-github.png"> <a href="http://github.com/xcoderzach/spacemagic">Follow us on GitHub!</a></h3></div>
+        <div class="span3 center"><h3><a href="/tutorials">Tutorials</a></h3></div>
         <div class="span3 center"><h3><a href="/docs">Documentation</a></h3></div>
         <div class="span3 center"><h3><a href="/about.html">About SpaceMagic</a></h3></div>
       </div>
@@ -63,9 +63,6 @@ module.exports = View.define("NewChatView")
     this.view = new ChatView(Chat.find())
   })
 })</code></pre>
-          </div>
-          <div class="span6">
-            <iframe class="todoContainer" src="http://165.225.128.119/chat" frameborder="0" height="266px" width="570px" scrolling="no"></iframe>
           <h3>HTML, (/assets/templates/chats/list.html)</h3>
           <pre><code>&lt;section&gt;
   &lt;ul class = &quot;chats&quot;&gt;
@@ -83,13 +80,17 @@ module.exports = View.define("NewChatView")
   &lt;/form&gt;
 &lt;/section&gt;</code></pre>
           </div>
+          <div class="span6">
+            <p class="center">IE support coming in the near future.</p>
+            <iframe class="todoContainer" src="http://165.225.128.119/chat" frameborder="0" height="562px" width="570px" scrolling="no"></iframe>
+          </div>
         </div>
         <div class="row">
-          <h3>Done. Enjoy your real-time chat web app. For a more elaborate example, please check our <a href="/tutorials">tutorials</a> section.</h3>
+          <h3>Done. Enjoy your <a href="https://github.com/xcoderzach/SpaceMagicChatExample">real-time chat web app</a>. For a more elaborate example, please check our <a href="/tutorials">tutorials</a> section.</h3>
         </div>
         <hr>
   <footer>
-    <p>Framework MIT Licensed, &copy; <a href="http://eugene4.com">Eugene Butler</a> (eugene@eugene4.com) and <a href="http://github.com/xcoderzach">Zach Smith</a> (x.coder.zach@gmail.com). Please contact either or both of us if you have questions or comments.</p>
+    <p>Framework MIT Licensed, &copy; <a href="http://github.com/ebutleriv">Eugene Butler</a> (eugene@eugene4.com) and <a href="http://github.com/xcoderzach">Zach Smith</a> (x.coder.zach@gmail.com). Please contact either or both of us if you have questions or comments.</p>
   </footer>
 
 

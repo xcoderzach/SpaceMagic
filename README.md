@@ -9,10 +9,10 @@ Installation
 To install SpaceMagic:
 
 ```
+npm install -g SpaceMagic
+spacemagic init my_project
 mkdir my_project
 cd my_project
-npm install SpaceMagic
-spacemagic init my_project
 ```
 
 Configure

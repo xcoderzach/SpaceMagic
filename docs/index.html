@@ -8,10 +8,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
     <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
     <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="../assets/css/style.css" rel="stylesheet">
 
     <style>
       body {
@@ -73,13 +71,21 @@
         </div>
         <div class="span8">
 <h1>Welcome to SpaceMagic</h1>
-<p>  SpaceMagic is a full-stack javascript web development framework which allows
+<p>SpaceMagic is a full-stack javascript web development framework which allows
 you to build fast, real-time web applications.  It allows you to write only
 one app and share it between the client and the server.
 
 </p>
+<h2>Disclaimer</h2>
+<p>SpaceMagic is not yet production-ready. We are working very hard to get it
+there, but the API is unstable and subject to change without notice.
+
+</p>
+<p>Sorry, IE users. Support for your browser is coming very soon.
+
+</p>
 <h2>Installation</h2>
-<pre><code>npm install -g spacemagic
+<pre><code>npm install -g SpaceMagic
 spacemagic init myProject
 cd myProject
 npm install</code></pre>
@@ -95,21 +101,19 @@ But if you need to configure your database connection info goto the file:
 <pre><code>vim config/database.js</code></pre>
 <h2>Next Steps</h2>
 <ul>
-<li>Checkout our Basic Todo Tutorial</li>
-<li>or the Chat Tutorial</li>
-<li>or the Micro Blogging tutorial</li>
-<li>or checkout the Guides</li>
-<li>or dive into the API documentation</li>
+<li>Check out our [<a href="http://spacemagic.io/tutorials/](To-do">http://spacemagic.io/tutorials/](To-do</a> Tutorial)</li>
+<li>Dive into the Documentation</li>
+<li>Follow us on Twitter</li>
 </ul>
 <h2>High-level Overview</h2>
 <p>SpaceMagic is an MV* framework. Its main components are:
 
 </p>
 <ul>
-<li><a href="https://github.com/xcoderzach/LiveView">LiveView</a> - A pure, semantic HTML-based templating language.</li>
-<li><a href="https://github.com/xcoderzach/LiveDocument">LiveDocument</a> - A real-time client-server isomorphic ODM.</li>
+<li><a href="https://github.com/xcoderzach/LiveView">LiveView</a> - A pure, semantic HTML-based templating language.  Just write the semantic html you would have written anyways.</li>
+<li><a href="https://github.com/xcoderzach/LiveDocument">LiveDocument</a> - A real-time client-server Object Document Mapper for mongodb.</li>
 <li><a href="https://github.com/xcoderzach/LiveController">LiveController</a> - A tiny, client-side, pushState router. </li>
-<li><a href="https://github.com/xcoderzach/AssetPipeline">AssetPipeline</a> - A static asset provider with support for minification, javascript modules, and caching.</li>
+<li><a href="https://github.com/xcoderzach/AssetPipeline">AssetPipeline</a> - A static asset provider with support for minification, javascript modules, minifcation and caching.</li>
 </ul>
 <h1>Views API</h1>
 <h2>View</h2>
@@ -173,9 +177,13 @@ is performed on the selector.
 </p>
 <h3>map</h3>
 <h5>SingleView.map(key, mapper)</h5>
-<p>When <code>key</code> is loaded or changes on the model, calls <code>mapper</code> with the key and the value associated with the key, then sets key in the view to the return value of mapper.
+<p>When <code>key</code> is loaded or changes on the model, calls <code>mapper</code> with the key and
+the value associated with the key, and a <code>set</code> function as a parameter. 
+
 </p>
-<h6>TODO: make async.</h6>
+<pre><code class="javascript">.map(&quot;votes&quot;, function(key, value, set) {
+  set(&quot;plusTenVotes&quot;, value + 10)
+})</code></pre>
 <h2>ListView</h2>
 <h3>beforeInsert</h3>
 <h5>ListView.beforeInsert(fn)</h5>
@@ -235,18 +243,22 @@ live view variables. If omitted, LiveView will assume the default scope, &quot;m
 </p>
 <h3>changeTemplate</h3>
 <h5>LiveView.changeTemplate(template)</h5>
-<p>Changes the template used by the live view to the one specified. This can be used to hotswap templates during development.
+<p>Changes the template used by the live view to the one specified. This can be
+used to hotswap templates during development.
+
 </p>
 <h6>TODO: Make hotswapping possible</h6>
 <h3>find</h3>
 <h5>LiveView.find(selector)</h5>
-<p>Returns elements that match selector. Finds elements in current view as well as elements in any polymorphic subviews.
+<p>Returns elements that match selector. Finds elements in current view as well as
+elements in any polymorphic subviews.
 
 </p>
 <h3>set</h3>
 <h5>LiveView.set(name, value)</h5>
 <h5>LiveView.set(JSONObject)</h5>
-<p>Sets the value or values of an element <code>name</code> to <code>value</code>. If a single object is passed, set each key in <code>JSONObject</code> to its value.
+<p>Sets the value or values of an element <code>name</code> to <code>value</code>. If a single object is
+passed, set each key in <code>JSONObject</code> to its value.
 
 </p>
 <pre><code class="html">&lt;div class=&quot;post&quot;&gt;&lt;/div&gt;</code></pre>
@@ -334,7 +346,7 @@ keys on your documents, as well as validations and associations.
 <code>Document</code>.
 
 </p>
-<pre><code class="javascript">module.exports = Document(&quot;Post&quot;)
+<pre><code class="javascript">module.exports = Document.define(&quot;Post&quot;)
   .key(&quot;title&quot;)
   .key(&quot;body&quot;, {required: false})</code></pre>
 <p>The following are the optional properties of a key
@@ -363,7 +375,7 @@ of calling <code>(new Date).getTime()</code>
 <p>To access the timestamps you can call <a href="/api.html#get">get(&quot;createdAt&quot;) or get(&quot;updatedAt&quot;)</a>
 
 </p>
-<pre><code class="javascript">module.exports = Document(&quot;Post&quot;)
+<pre><code class="javascript">module.exports = Document.define(&quot;Post&quot;)
   //define the rest of your keys
   .timestamps()</code></pre>
 <h3>getKey</h3>
@@ -376,7 +388,7 @@ return value of valueFn.
 watchFields changes.
 
 </p>
-<pre><code class="javascript">User = Document(&quot;User&quot;)
+<pre><code class="javascript">User = Document.define(&quot;User&quot;)
   .getKey(&quot;fullName&quot;, [&quot;first&quot;, &quot;last&quot;], function () {
     return this.get(&quot;first&quot;) + &quot; &quot; + this.get(&quot;last&quot;)
   })</code></pre>
@@ -390,7 +402,7 @@ a user calls the <code>.set</code> method.
 
 
 </p>
-<pre><code class="javascript">module.exports = Document(&quot;Post&quot;)
+<pre><code class="javascript">module.exports = Document.define(&quot;Post&quot;)
   //define the rest of your keys
   .setKey(&quot;name&quot;, function(name) {
     name = name.split(&quot; &quot;)      
@@ -413,7 +425,7 @@ passed to done in a before filter, the document will not save and whatever was
 passed to done will be emitted as the first argument to the <code>&quot;error&quot;</code> event.</p>
 </li>
 </ul>
-<pre><code class="javascript">module.exports = Document(&quot;Post&quot;)
+<pre><code class="javascript">module.exports = Document.define(&quot;Post&quot;)
   .beforeSave(function(post, done) {
     post.isUnique(&quot;title&quot;, function(isUnique) {
       if(!isUnique) {
@@ -489,13 +501,13 @@ the following:
 </p>
 <pre><code class="javascript">
 //comment.js
-var Comment = Document(&quot;Comment&quot;)
+var Comment = Document.define(&quot;Comment&quot;)
   , Post = require(&quot;./post&quot;)
 
 Comment
   .belongsTo(Post)
 
-var Post = Document(&quot;Post&quot;)
+var Post = Document.define(&quot;Post&quot;)
   , Comment = require(&quot;./comment&quot;)
 
 Post
@@ -511,7 +523,7 @@ documents.
 </p>
 <pre><code class="javascript">var Comment = require(&quot;./comment&quot;)
 
-module.exports = Document(&quot;Post&quot;)
+module.exports = Document.define(&quot;Post&quot;)
   .many(Comment)</code></pre>
 <p>Opts accepts the following options: 
 
@@ -541,7 +553,7 @@ documents.
 </p>
 <pre><code class="javascript">var Profile = require(&quot;./profile&quot;)
 
-module.exports = Document(&quot;User&quot;)
+module.exports = Document.define(&quot;User&quot;)
   .one(Profile)</code></pre>
 <p>Opts accepts the following options: 
 
@@ -568,7 +580,7 @@ example, <code>comments</code> belong to a <code>blogPost</code>, a <code>profil
 
 </p>
 <pre><code class="javascript">var Post = require(&quot;./post&quot;)
-module.exports = Document(&quot;Comment&quot;)
+module.exports = Document.define(&quot;Comment&quot;)
   .belongsTo(Post)</code></pre>
 <h2>Document Helper Methods</h2>
 <h3>find</h3>
@@ -584,7 +596,7 @@ A query is simply a mongodb query object.
 <p>  Here is an example that will find all posts with 100 or more votes.
 </p>
 <pre><code class="javascript">//post.js
-module.exports = Document(&quot;Post&quot;)
+module.exports = Document.define(&quot;Post&quot;)
   .key(&quot;votes&quot;)
 
 var post = Post.find({votes: { $gt: 100 })</code></pre>
@@ -604,7 +616,7 @@ you can, and should, pass it to the view immediatly.  The document will fire
 
 </p>
 <pre><code class="javascript">//post.js
-module.exports = Document(&quot;Post&quot;)
+module.exports = Document.define(&quot;Post&quot;)
 
 //myCode.js
 var Post = require(&quot;./post&quot;)
@@ -618,7 +630,7 @@ should be unique.
 
 </p>
 <pre><code class="javascript">//user.js
-module.exports = Document(&quot;User&quot;)
+module.exports = Document.define(&quot;User&quot;)
   .key(&quot;email&quot;)
 
 var user = User.findByKey(&quot;email&quot;, &quot;x.coder.zach[At]gmail.com&quot;)</code></pre>
@@ -630,7 +642,7 @@ var user = User.findByKey(&quot;email&quot;, &quot;x.coder.zach[At]gmail.com&quo
 <p>This is simply a utility method for the following:
 
 </p>
-<pre><code class="javascript">module.exports = Document(&quot;User&quot;)
+<pre><code class="javascript">module.exports = Document.define(&quot;User&quot;)
   .key(&quot;name&quot;)
   .key(&quot;email&quot;)
 
@@ -687,7 +699,7 @@ user.save()</code></pre>
 <p>Returns a list of the many associations this document has.
 
 </p>
-<pre><code class="javascript">module.exports = Document(&quot;Post&quot;)
+<pre><code class="javascript">module.exports = Document.define(&quot;Post&quot;)
   .many(&quot;comments&quot;)
 
 
@@ -699,7 +711,7 @@ post.manyAssocs() // [&quot;comments&quot;]</code></pre>
 point to one document.
 
 </p>
-<pre><code class="javascript">module.exports = Document(&quot;Post&quot;)
+<pre><code class="javascript">module.exports = Document.define(&quot;Post&quot;)
   .one(&quot;thing&quot;)
   .belongsTo(&quot;author&quot;)
 
@@ -711,7 +723,7 @@ post.oneAssocs() // [&quot;thing&quot;, &quot;author&quot;]</code></pre>
 <p>  Returns a list of the names of all associations for this document.
 
 </p>
-<pre><code class="javascript">module.exports = Document(&quot;Post&quot;)
+<pre><code class="javascript">module.exports = Document.define(&quot;Post&quot;)
   .many(&quot;comments&quot;)
   .belongsTo(&quot;author&quot;)
 
@@ -824,6 +836,51 @@ called with invalid data, in order to do responsive real-time error reporting.
 <h3>&quot;error&quot;</h3>
 <p>  Emitted when there is an error with the document, right now this only
 happens when an error is passed into the done method of after save.
+
+</p>
+<h2>Collection Methods</h2>
+<p>  A collection is a list of documents, usually returned by the find()
+method.
+
+</p>
+<p>  This example returns a collection of all tasks in the database.
+</p>
+<pre><code>var tasks = Task.find()</code></pre>
+<h3>at</h3>
+<h4>Collection.prototype.at(index)</h4>
+<p>  Returns the Document at index <code>index</code>.
+
+</p>
+<pre><code class="javascript">var firstTask = tasks.at(0)</code></pre>
+<h3>length</h3>
+<h4>collection.length</h4>
+<p>  This isn&#39;t a method, but collections have a length property, the length of the collection
+
+</p>
+<h3>get</h3>
+<h4>Collection.prototype.get(id)</h4>
+<p>  This returns the document with _id equal to id.
+
+</p>
+<h3>sortBy</h3>
+<h4>Collection.prototype.sortBy(field[, reverse])</h4>
+<p>  Sorts collection by <code>field</code>. If reverse is true, then it&#39;s in reverse order.
+Reverse order is descending. Normal order is ascending.
+
+</p>
+<h3>filter</h3>
+<h4>Collection.prototype.filter(fn)</h4>
+<p>  Filters the collection by fn, if fn returns true, the document is added to
+the collection.
+
+</p>
+<pre><code class="javascript">collection.filter(function(document) {
+  return document.get(&quot;votes&quot;) &gt; 100
+})</code></pre>
+<h3>load</h3>
+<h4>Collection.prototype.load(fn)</h4>
+<p>  Called once the collection is loaded, unless it already is, then it&#39;s called
+immediately.
 </p>
 <h1>LiveController API Documentation</h1>
 <h3>Controller</h3>

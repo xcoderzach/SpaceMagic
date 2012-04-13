@@ -1,15 +1,23 @@
 Welcome to SpaceMagic
 =====================
 
-  SpaceMagic is a full-stack javascript web development framework which allows
+SpaceMagic is a full-stack javascript web development framework which allows
 you to build fast, real-time web applications.  It allows you to write only
 one app and share it between the client and the server.
+
+Disclaimer
+----------
+
+SpaceMagic is not yet production-ready. We are working very hard to get it
+there, but the API is unstable and subject to change without notice.
+
+Sorry, IE users. Support for your browser is coming very soon.
 
 Installation
 ------------
 
 ```
-npm install -g spacemagic
+npm install -g SpaceMagic
 spacemagic init myProject
 cd myProject
 npm install
@@ -32,21 +40,19 @@ vim config/database.js
 Next Steps
 ----------
 
-  * Checkout our Basic Todo Tutorial
-  * or the Chat Tutorial
-  * or the Micro Blogging tutorial
-  * or checkout the Guides
-  * or dive into the API documentation
+  * Check out our [http://spacemagic.io/tutorials/](To-do Tutorial)
+  * Dive into the Documentation
+  * Follow us on Twitter
 
 High-level Overview
 -------------------
 
 SpaceMagic is an MV* framework. Its main components are:
 
-  * [LiveView](https://github.com/xcoderzach/LiveView) - A pure, semantic HTML-based templating language.
-  * [LiveDocument](https://github.com/xcoderzach/LiveDocument) - A real-time client-server isomorphic ODM.
+  * [LiveView](https://github.com/xcoderzach/LiveView) - A pure, semantic HTML-based templating language.  Just write the semantic html you would have written anyways.
+  * [LiveDocument](https://github.com/xcoderzach/LiveDocument) - A real-time client-server Object Document Mapper for mongodb.
   * [LiveController](https://github.com/xcoderzach/LiveController) - A tiny, client-side, pushState router. 
-  * [AssetPipeline](https://github.com/xcoderzach/AssetPipeline) - A static asset provider with support for minification, javascript modules, and caching.
+  * [AssetPipeline](https://github.com/xcoderzach/AssetPipeline) - A static asset provider with support for minification, javascript modules, minifcation and caching.
 
 Views API
 =========
@@ -122,8 +128,14 @@ SingleView has all the methods of view but, in addition, binds all key in model 
 
 #####SingleView.map(key, mapper)
 
-When `key` is loaded or changes on the model, calls `mapper` with the key and the value associated with the key, then sets key in the view to the return value of mapper.
-######TODO: make async.
+When `key` is loaded or changes on the model, calls `mapper` with the key and
+the value associated with the key, and a `set` function as a parameter. 
+
+```javascript
+.map("votes", function(key, value, set) {
+  set("plusTenVotes", value + 10)
+})
+```
 
 ##ListView
 
@@ -197,21 +209,25 @@ live view variables. If omitted, LiveView will assume the default scope, "main."
 
 #####LiveView.changeTemplate(template) 
 
-Changes the template used by the live view to the one specified. This can be used to hotswap templates during development.
+Changes the template used by the live view to the one specified. This can be
+used to hotswap templates during development.
+
 ######TODO: Make hotswapping possible
 
 ###find
 
 #####LiveView.find(selector)
 
-Returns elements that match selector. Finds elements in current view as well as elements in any polymorphic subviews.
+Returns elements that match selector. Finds elements in current view as well as
+elements in any polymorphic subviews.
 
 ###set
 
 #####LiveView.set(name, value)
 #####LiveView.set(JSONObject)
 
-Sets the value or values of an element `name` to `value`. If a single object is passed, set each key in `JSONObject` to its value.
+Sets the value or values of an element `name` to `value`. If a single object is
+passed, set each key in `JSONObject` to its value.
 
 ```html
 <div class="post"></div>
@@ -323,7 +339,7 @@ keys on your documents, as well as validations and associations.
 `Document`.
 
 ```javascript
-module.exports = Document("Post")
+module.exports = Document.define("Post")
   .key("title")
   .key("body", {required: false})
 ```
@@ -351,7 +367,7 @@ of calling `(new Date).getTime()`
 To access the timestamps you can call [get("createdAt") or get("updatedAt")](/api.html#get)
 
 ```javascript
-module.exports = Document("Post")
+module.exports = Document.define("Post")
   //define the rest of your keys
   .timestamps()
 ``` 
@@ -367,7 +383,7 @@ return value of valueFn.
 watchFields changes.
 
 ```javascript
-User = Document("User")
+User = Document.define("User")
   .getKey("fullName", ["first", "last"], function () {
     return this.get("first") + " " + this.get("last")
   })
@@ -384,7 +400,7 @@ a user calls the `.set` method.
 
 
 ```javascript
-module.exports = Document("Post")
+module.exports = Document.define("Post")
   //define the rest of your keys
   .setKey("name", function(name) {
     name = name.split(" ")      
@@ -408,7 +424,7 @@ passed to done in a before filter, the document will not save and whatever was
 passed to done will be emitted as the first argument to the `"error"` event.
 
 ```javascript
-module.exports = Document("Post")
+module.exports = Document.define("Post")
   .beforeSave(function(post, done) {
     post.isUnique("title", function(isUnique) {
       if(!isUnique) {
@@ -497,13 +513,13 @@ the following:
 ```javascript
 
 //comment.js
-var Comment = Document("Comment")
+var Comment = Document.define("Comment")
   , Post = require("./post")
 
 Comment
   .belongsTo(Post)
 
-var Post = Document("Post")
+var Post = Document.define("Post")
   , Comment = require("./comment")
 
 Post
@@ -522,7 +538,7 @@ documents.
 ```javascript
 var Comment = require("./comment")
 
-module.exports = Document("Post")
+module.exports = Document.define("Post")
   .many(Comment)
 ```
 
@@ -552,7 +568,7 @@ documents.
 ```javascript
 var Profile = require("./profile")
 
-module.exports = Document("User")
+module.exports = Document.define("User")
   .one(Profile)
 ```
 
@@ -579,7 +595,7 @@ example, `comments` belong to a `blogPost`, a `profile` belongs to a `user`.
  
 ```javascript
 var Post = require("./post")
-module.exports = Document("Comment")
+module.exports = Document.define("Comment")
   .belongsTo(Post)
 ```
 
@@ -599,7 +615,7 @@ See [this page](http://www.mongodb.org/display/DOCS/Advanced+Queries) for more o
   Here is an example that will find all posts with 100 or more votes.
 ```javascript
 //post.js
-module.exports = Document("Post")
+module.exports = Document.define("Post")
   .key("votes")
 
 var post = Post.find({votes: { $gt: 100 })
@@ -621,7 +637,7 @@ pass in a callback as the second argument to findOne, or pass a callback to the
 
 ```javascript
 //post.js
-module.exports = Document("Post")
+module.exports = Document.define("Post")
 
 //myCode.js
 var Post = require("./post")
@@ -639,7 +655,7 @@ should be unique.
 
 ```javascript
 //user.js
-module.exports = Document("User")
+module.exports = Document.define("User")
   .key("email")
 
 var user = User.findByKey("email", "x.coder.zach[At]gmail.com") 
@@ -654,7 +670,7 @@ This example finds a user by email address.
 This is simply a utility method for the following:
 
 ```javascript
-module.exports = Document("User")
+module.exports = Document.define("User")
   .key("name")
   .key("email")
 
@@ -718,7 +734,7 @@ Removes the document from the DB. Callback is called once document has been remo
 Returns a list of the many associations this document has.
 
 ```javascript
-module.exports = Document("Post")
+module.exports = Document.define("Post")
   .many("comments")
 
 
@@ -733,7 +749,7 @@ This is the names of one assocs, as well as belongsTo assocs, since they both
 point to one document.
 
 ```javascript
-module.exports = Document("Post")
+module.exports = Document.define("Post")
   .one("thing")
   .belongsTo("author")
 
@@ -747,7 +763,7 @@ post.oneAssocs() // ["thing", "author"]
   Returns a list of the names of all associations for this document.
 
 ```javascript
-module.exports = Document("Post")
+module.exports = Document.define("Post")
   .many("comments")
   .belongsTo("author")
 
@@ -872,6 +888,60 @@ called with invalid data, in order to do responsive real-time error reporting.
  
   Emitted when there is an error with the document, right now this only
 happens when an error is passed into the done method of after save.
+
+Collection Methods
+------------------
+
+  A collection is a list of documents, usually returned by the find()
+method.
+
+  This example returns a collection of all tasks in the database.
+```
+var tasks = Task.find()
+```
+
+###at
+####Collection.prototype.at(index)
+
+  Returns the Document at index `index`.
+
+```javascript
+var firstTask = tasks.at(0)
+```
+
+###length
+####collection.length
+
+  This isn't a method, but collections have a length property, the length of the collection
+
+###get
+####Collection.prototype.get(id)
+
+  This returns the document with _id equal to id.
+
+###sortBy
+####Collection.prototype.sortBy(field[, reverse])
+
+  Sorts collection by `field`. If reverse is true, then it's in reverse order.
+Reverse order is descending. Normal order is ascending.
+
+###filter
+####Collection.prototype.filter(fn)
+
+  Filters the collection by fn, if fn returns true, the document is added to
+the collection.
+
+```javascript
+collection.filter(function(document) {
+  return document.get("votes") > 100
+})
+```
+
+###load
+####Collection.prototype.load(fn)
+
+  Called once the collection is loaded, unless it already is, then it's called
+immediately.
 LiveController API Documentation
 ================================
 

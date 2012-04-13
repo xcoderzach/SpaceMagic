@@ -27,105 +27,67 @@
       <div class="row links">
         <div class="span3"><h3><img src="/assets/img/icon-github.png"> <a href="http://github.com/xcoderzach/spacemagic">Visit our GitHub Repo</a></h3></div>
         <div class="span3 center"><h3><a href="/tutorials">View Tutorials</a></h3></div>
-        <div class="span3 center"><h3><a href="/docs">Read API Docs</a></h3></div>
+        <div class="span3 center"><h3><a href="/docs">Documentation</a></h3></div>
         <div class="span3 center"><h3><a href="/about.html">About SpaceMagic</a></h3></div>
       </div>
       <hr class="linksHr">
       <header>
-        <h2 class="big">EXAMPLE: To-Do List</h2>
-        <h3>
+        <h2>EXAMPLE: Realtime Chat</h2>
       </header>
         <div class="row">
           <div class="span6">
-            <h3>Quick Start</h3>
-            <pre><code class="javascript">npm install -g SpaceMagic
-spacemagic init todoList
-cd todoList
-npm install</code></pre>
-            <h3>This is all you need to define the model. (/app/models/task.js)</h3>
-            <pre><code class="javascript">var Document = require("LiveDocument/lib/document")
+            <h3>Model, (/app/models/chat.js)</h3>
+              <pre><code>var Chat = module.exports = Document.define("Chat")
+  .key("name", { length: [1, 18] })
+  .key("content", { length: [1, 140] })</code></pre>
 
-module.exports = Document.define("Task")
-  .key("title")
-  .key("votes")
-  .key("done") </code></pre>
-            <h3>All you need to define route, sort tasks by votes (descending). (/app/controllers/application_controller.js)</h3>
-           <pre><code class="javascript">var TaskListView = require("../views/tasks/list")
-  , Task = require("../models/task")
-  , Controller = require("LiveController/lib/live_controller").Controller
+            <h3>Views, (/app/views/chats/list.js, /app/views/chats/new.js)</h3>
+            <pre><code>module.exports = ListView.define("ChatView")
+  .template("/templates/chats/list.html")
+  .subView("#newChatForm", NewChatView)
+   
+module.exports = View.define("NewChatView") 
+  .action("submit #newChatForm", function(event, element) { 
+    event.preventDefault() 
+    var chatInput = element.find(".chat") 
+      , chat = chatInput.val()
+ 
+    chatInput.val("") 
+    var name = element.find(".name").val() 
+    Chat.create({ content: chat, name: name })
+  })</code></pre>
 
-Controller("/", function(app) {
+        <h3>Controller, (/app/controllers/application_controller.js)</h3>
+        <pre><code>Controller("/chat", function(app) {
   app.get(function() {
-    var tasks = Task.find()
-    tasks.sortBy("votes", true)
-    this.view = new TaskListView(tasks)
+    this.view = new ChatView(Chat.find())
   })
 })</code></pre>
-      <h3>Everything you need to display the list of tasks and upvote and downvote each task. (/app/views/tasks/list.js)</h3>
-      <pre><code class="javascript">var ListView = require("views/list_view")
-  , NewTaskView = require("./new")
-
-  , TaskView = ListView.define("TaskView")
-  .action("change input[type=checkbox]", function(event, element) {
-    var done = element.is(":checked")
-    this.model.set({ done: done })
-    this.model.save()
-  })
-  .action("click .upVote", function(event, element) {
-    var votes = this.model.get("votes")
-    this.model.set({ votes: votes + 1 })
-    this.model.save()
-  })
-  .action("click .downVote", function(event, element) {
-    var votes = this.model.get("votes")
-    this.model.set({ votes: votes - 1 })
-    this.model.save()
-  })
- 
-
-module.exports = ListView.define("TaskListView")
-  .template("/templates/tasks/list.html")
-  .subView("#newTaskForm", NewTaskView)
-  .singleView(TaskView) </code></pre>
-      <h3>Everything you need to create tasks. (/app/views/tasks/new.js)</h3>
-           <pre><code class="javascript">var View = require("views/view")
-  , Task = require("../../models/task")
-  , _ = require("underscore")
-
-module.exports = View.define("NewTaskView")
-  .action("submit #newTaskForm", function(event, element) {
-    var input = element.find("input[type=text]")
-    var title = input.val()
-    input.val("")
-
-    Task.create({ title: title, votes: 0, done: false })
-
-    event.preventDefault()
-  })</code></pre>
-  <h3>Throw down some HTML</h3>
-  <pre><code>&lt;section&gt;
-  &lt;ul class = &quot;tasks&quot;&gt;
-    &lt;li class = &quot;task&quot;&gt;
-      &lt;div class = &quot;upVote&quot;&gt;&lt;/div&gt;
-      &lt;div class = &quot;votes&quot;&gt;0&lt;/div&gt;
-      &lt;div class = &quot;downVote&quot;&gt;&lt;/div&gt;
-      &lt;div class = &quot;title&quot;&gt;&lt;/div&gt;
-      &lt;input type = &quot;checkbox&quot; class = &quot;done&quot;&gt;
+          </div>
+          <div class="span6">
+            <iframe class="todoContainer" src="http://165.225.128.119/chat" frameborder="0" height="266px" width="570px" scrolling="no"></iframe>
+          <h3>HTML, (/assets/templates/chats/list.html)</h3>
+          <pre><code>&lt;section&gt;
+  &lt;ul class = &quot;chats&quot;&gt;
+    &lt;li class = &quot;chat&quot;&gt;
+      &lt;div&gt;
+        &lt;span class = &quot;createdAt&quot; data-date-from-now&gt;&lt;/span&gt; &lt;span class = &quot;name&quot;&gt;&lt;/span&gt; said:
+      &lt;/div&gt;
+      &lt;div class = &quot;content&quot;&gt;&lt;/div&gt;
     &lt;/li&gt;
   &lt;/ul&gt;
-  &lt;form id = &quot;newTaskForm&quot;&gt;
-    &lt;input type = &quot;text&quot; name = &quot;task[title]&quot; /&gt;
-    &lt;input type = &quot;submit&quot; value=&quot;Add Task&quot;/&gt;
+  &lt;form id = &quot;newChatForm&quot;&gt;
+    &lt;label for=&quot;name&quot;&gt;name:&lt;/label&gt;&lt;input type = &quot;text&quot; class = &quot;name&quot;&gt;
+    &lt;label for=&quot;chat&quot;&gt;message:&lt;/label&gt;&lt;input type = &quot;text&quot; class = &quot;chat&quot;&gt;
+    &lt;input type = &quot;submit&quot; value=&quot;send&quot;&gt;
   &lt;/form&gt;
 &lt;/section&gt;</code></pre>
-  <h3>Done. Welcome to your new, realtime to-do list. Style or further mark it up however you want.</h3>
-  </div>
-  <div class="span5 offset1">
-    <iframe class="todoContainer" src="http://165.225.128.119/todo" frameborder="0" height="600px" width="415px" scrolling="no"></iframe>
-    <p>NOTE: Not intended to be an example of good UX design.</p>
-  </div>
-  </div>
-  <hr>
+          </div>
+        </div>
+        <div class="row">
+          <h3>Done. Enjoy your real-time chat web app. For a more elaborate example, please check our <a href="/tutorials">tutorials</a> section.</h3>
+        </div>
+        <hr>
   <footer>
     <p>Framework MIT Licensed, &copy; <a href="http://eugene4.com">Eugene Butler</a> (eugene@eugene4.com) and <a href="http://github.com/xcoderzach">Zach Smith</a> (x.coder.zach@gmail.com). Please contact either or both of us if you have questions or comments.</p>
   </footer>

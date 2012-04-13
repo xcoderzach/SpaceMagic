@@ -19,15 +19,15 @@ echo '
   </head>
   <body>
     <div class="container">
-      <header>
-        <h1 class="superbig">SPACE MAGIC</h1>
-        <h2>Simple Tutorials</h2>
+       <header>
+        <h1 class="superbig"><a href="/">SPACE MAGIC</a></h1>
+        <h2>Pragmatic webdev for node. v0.0.0</h2>
       </header>
       <div class="row links">
-        <div class="span3"><h3><img src="assets/img/icon-github.png"> <a href="http://github.com/xcoderzach/spacemagic">Visit our GitHub Repo</a></h3></div>
-        <div class="span3 center"><h3><a href="tutorials/">View Tutorials</a></h3></div>
-        <div class="span3 center"><h3><a href="docs/">Read API Docs</a></h3></div>
-        <div class="span3 center"><h3><a href="about.html">About SpaceMagic</a></h3></div>
+        <div class="span3"><h3><img src="/assets/img/icon-github.png"> <a href="http://github.com/xcoderzach/spacemagic">Visit our GitHub Repo</a></h3></div>
+        <div class="span3 center"><h3><a href="/tutorials">View Tutorials</a></h3></div>
+        <div class="span3 center"><h3><a href="/docs">Read API Docs</a></h3></div>
+        <div class="span3 center"><h3><a href="/about.html">About SpaceMagic</a></h3></div>
       </div>
       <hr class="linksHr">
       <div class="row">

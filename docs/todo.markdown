@@ -94,9 +94,7 @@ var TaskListView = require("../views/tasks/list")
 Controller("/", function(app) {
   app.get(function() {
     var tasks = Task.find()
-    tasks.load(function() {
-      tasks.sortBy("votes")
-    })
+    tasks.sortBy("votes")
     this.view = new TaskListView(tasks)
   }) 
 }) 
@@ -113,4 +111,68 @@ var Task = require("/app/models/task")
 Task.create({ title: "This is a task", votes: 0, done: false })
 ```
 
-You should have seen it live update in on the page if it worked.
+You should have seen it live update in on the page if everything is working.
+The form shouldn't work, neither do the checkbox or the up/downvote buttons.
+
+We'll create a view to handle the new task form first
+
+```javascript
+var View = require("views/view") 
+  , Task = require("../models/task")
+  , _ = require("underscore")
+
+module.exports = View.define("NewTaskView")
+  .action("submit #newTaskForm", function(event, element) {
+
+    var input = element.find("input[type=text]")
+      , title = input.val()
+
+    Task.create({ title: title, votes: 0, done: false })
+  })
+``` 
+
+now we just have to append this view as a subview of our main view.
+
+```javascript
+//add the require
+var NewTaskView = require("../veiws/tasks/new")
+
+//and make it a subview
+  .subView("#newTaskView", NewTaskView)
+```
+
+  By default a Form View saves the model on submit, so this is all we need
+for a basic create form.
+
+  Now the last thing is to get the up and downvotes and checkboxes working.
+
+  So we'll create a single view file for each task in the collection, for simplicity
+we'll put it in the same file as the list view.
+
+```javascript
+var TaskView = ListView.define("TaskView")                                            
+  .action("change input[type=checkbox]", function(event, element) {
+    var done = element.is(":checked")
+    this.model.set({ done: done })
+    this.model.save()
+  })
+  .action("click .upVote", function(event, element) {
+    var votes = this.model.get("votes")
+    this.model.set({ votes: votes + 1 })
+    this.model.save()
+  }) 
+  .action("click .downVote", function(event, element) {
+    var votes = this.model.get("votes")
+    this.model.set({ votes: votes - 1 })
+    this.model.save()
+  })
+
+```
+
+and then add it as the view for the single items in the task list.
+
+```javascript
+  .singleView(TaskView)
+```
+
+And Blam, you have a fully real-time todo list with upvotes.

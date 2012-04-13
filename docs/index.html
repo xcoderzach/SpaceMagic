@@ -71,13 +71,21 @@
         </div>
         <div class="span8">
 <h1>Welcome to SpaceMagic</h1>
-<p>  SpaceMagic is a full-stack javascript web development framework which allows
+<p>SpaceMagic is a full-stack javascript web development framework which allows
 you to build fast, real-time web applications.  It allows you to write only
 one app and share it between the client and the server.
 
 </p>
+<h2>Disclaimer</h2>
+<p>SpaceMagic is not yet production-ready. We are working very hard to get it
+there, but the API is unstable and subject to change without notice.
+
+</p>
+<p>Sorry, IE users. Support for your browser is coming very soon.
+
+</p>
 <h2>Installation</h2>
-<pre><code>npm install -g spacemagic
+<pre><code>npm install -g SpaceMagic
 spacemagic init myProject
 cd myProject
 npm install</code></pre>
@@ -93,21 +101,19 @@ But if you need to configure your database connection info goto the file:
 <pre><code>vim config/database.js</code></pre>
 <h2>Next Steps</h2>
 <ul>
-<li>Checkout our Basic Todo Tutorial</li>
-<li>or the Chat Tutorial</li>
-<li>or the Micro Blogging tutorial</li>
-<li>or checkout the Guides</li>
-<li>or dive into the API documentation</li>
+<li>Check out our [<a href="http://spacemagic.io/tutorials/](To-do">http://spacemagic.io/tutorials/](To-do</a> Tutorial)</li>
+<li>Dive into the Documentation</li>
+<li>Follow us on Twitter</li>
 </ul>
 <h2>High-level Overview</h2>
 <p>SpaceMagic is an MV* framework. Its main components are:
 
 </p>
 <ul>
-<li><a href="https://github.com/xcoderzach/LiveView">LiveView</a> - A pure, semantic HTML-based templating language.</li>
-<li><a href="https://github.com/xcoderzach/LiveDocument">LiveDocument</a> - A real-time client-server isomorphic ODM.</li>
+<li><a href="https://github.com/xcoderzach/LiveView">LiveView</a> - A pure, semantic HTML-based templating language.  Just write the semantic html you would have written anyways.</li>
+<li><a href="https://github.com/xcoderzach/LiveDocument">LiveDocument</a> - A real-time client-server Object Document Mapper for mongodb.</li>
 <li><a href="https://github.com/xcoderzach/LiveController">LiveController</a> - A tiny, client-side, pushState router. </li>
-<li><a href="https://github.com/xcoderzach/AssetPipeline">AssetPipeline</a> - A static asset provider with support for minification, javascript modules, and caching.</li>
+<li><a href="https://github.com/xcoderzach/AssetPipeline">AssetPipeline</a> - A static asset provider with support for minification, javascript modules, minifcation and caching.</li>
 </ul>
 <h1>Views API</h1>
 <h2>View</h2>

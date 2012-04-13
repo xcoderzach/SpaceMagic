@@ -1,15 +1,23 @@
 Welcome to SpaceMagic
 =====================
 
-  SpaceMagic is a full-stack javascript web development framework which allows
+SpaceMagic is a full-stack javascript web development framework which allows
 you to build fast, real-time web applications.  It allows you to write only
 one app and share it between the client and the server.
+
+Disclaimer
+----------
+
+SpaceMagic is not yet production-ready. We are working very hard to get it
+there, but the API is unstable and subject to change without notice.
+
+Sorry, IE users. Support for your browser is coming very soon.
 
 Installation
 ------------
 
 ```
-npm install -g spacemagic
+npm install -g SpaceMagic
 spacemagic init myProject
 cd myProject
 npm install
@@ -32,19 +40,17 @@ vim config/database.js
 Next Steps
 ----------
 
-  * Checkout our Basic Todo Tutorial
-  * or the Chat Tutorial
-  * or the Micro Blogging tutorial
-  * or checkout the Guides
-  * or dive into the API documentation
+  * Check out our [http://spacemagic.io/tutorials/](To-do Tutorial)
+  * Dive into the Documentation
+  * Follow us on Twitter
 
 High-level Overview
 -------------------
 
 SpaceMagic is an MV* framework. Its main components are:
 
-  * [LiveView](https://github.com/xcoderzach/LiveView) - A pure, semantic HTML-based templating language.
-  * [LiveDocument](https://github.com/xcoderzach/LiveDocument) - A real-time client-server isomorphic ODM.
+  * [LiveView](https://github.com/xcoderzach/LiveView) - A pure, semantic HTML-based templating language.  Just write the semantic html you would have written anyways.
+  * [LiveDocument](https://github.com/xcoderzach/LiveDocument) - A real-time client-server Object Document Mapper for mongodb.
   * [LiveController](https://github.com/xcoderzach/LiveController) - A tiny, client-side, pushState router. 
-  * [AssetPipeline](https://github.com/xcoderzach/AssetPipeline) - A static asset provider with support for minification, javascript modules, and caching.
+  * [AssetPipeline](https://github.com/xcoderzach/AssetPipeline) - A static asset provider with support for minification, javascript modules, minifcation and caching.
 

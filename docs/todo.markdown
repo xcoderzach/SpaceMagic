@@ -3,15 +3,13 @@ Build A Todo App
 
   We're going to go through the steps to build a Todo App with up and downvotes.
 
-  You can see a demo of the finished product here: [Todo Example]()
-
   We'll assume you have mongodb, node, and npm installed already and have mongo
 running on the default port on localhost.
 
   First we need to get SpaceMagic installed, so we just run:
 
 ```
-npm install -g spacemagic
+npm install -g SpaceMagic
 ```
 
 w00t, that's it, now we'll initialize a new SpaceMagic app.
@@ -32,7 +30,8 @@ If the thing is green that means bootstrap is up and running. w00t.
 all we have to do in order to have working templates is to write the semantic html
 we would have written anyway.
 
-```javascript
+`/assets/templates/tasks/list.html`
+```HTML
 <section>
   <ul class = "tasks">
     <li class = "task">
@@ -60,6 +59,7 @@ has three properties:
 
   To define these properties on a model we use the `key` method. 
 
+`/app/models/task.js`
 ```javascript
 var Document = require("LiveDocument/lib/document")
 
@@ -76,6 +76,7 @@ making a model.
 controllers which handles syncing the model to the template, the particular
 view we'll use is the list view, since we need to show a list of tasks.
 
+`/app/views/tasks/list.js`
 ```javascript
 var ListView = require("views/list_view") 
 
@@ -86,6 +87,7 @@ module.exports = ListView.define("TaskListView")
 Now we just need to connect the two together, so in application_controller.js we'll setup 
 the route "/" to load our view, 
 
+`/app/controllers/application_controller.js`
 ```javascript
 var TaskListView = require("../views/tasks/list")
   , Task = require("../models/task")
@@ -116,6 +118,7 @@ The form shouldn't work, neither do the checkbox or the up/downvote buttons.
 
 We'll create a view to handle the new task form first
 
+`/app/views/tasks/new.js`
 ```javascript
 var View = require("views/view") 
   , Task = require("../models/task")
@@ -133,9 +136,10 @@ module.exports = View.define("NewTaskView")
 
 now we just have to append this view as a subview of our main view.
 
+`/app/views/tasks/list.js`
 ```javascript
 //add the require
-var NewTaskView = require("../veiws/tasks/new")
+var NewTaskView = require("./new")
 
 //and make it a subview
   .subView("#newTaskView", NewTaskView)
@@ -149,6 +153,7 @@ for a basic create form.
   So we'll create a single view file for each task in the collection, for simplicity
 we'll put it in the same file as the list view.
 
+`/app/views/tasks/list.js`
 ```javascript
 var TaskView = ListView.define("TaskView")                                            
   .action("change input[type=checkbox]", function(event, element) {
@@ -171,8 +176,12 @@ var TaskView = ListView.define("TaskView")
 
 and then add it as the view for the single items in the task list.
 
+`/app/views/tasks/list.js`
 ```javascript
   .singleView(TaskView)
 ```
 
-And Blam, you have a fully real-time todo list with upvotes.
+And Blam, you have a fully real-time todo list with upvotes. If you've had any
+problems, or just want to check out a completed version of the project, it's
+[https://github.com/xcoderzach/SpaceMagicTodoExample](available from our GitHub
+repository).

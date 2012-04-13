@@ -1,15 +1,23 @@
 Welcome to SpaceMagic
 =====================
 
-  SpaceMagic is a full-stack javascript web development framework which allows
+SpaceMagic is a full-stack javascript web development framework which allows
 you to build fast, real-time web applications.  It allows you to write only
 one app and share it between the client and the server.
+
+Disclaimer
+----------
+
+SpaceMagic is not yet production-ready. We are working very hard to get it
+there, but the API is unstable and subject to change without notice.
+
+Sorry, IE users. Support for your browser is coming very soon.
 
 Installation
 ------------
 
 ```
-npm install -g spacemagic
+npm install -g SpaceMagic
 spacemagic init myProject
 cd myProject
 npm install
@@ -32,11 +40,9 @@ vim config/database.js
 Next Steps
 ----------
 
-  * Checkout our Basic Todo Tutorial
-  * or the Chat Tutorial
-  * or the Micro Blogging tutorial
-  * or checkout the Guides
-  * or dive into the API documentation
+  * Check out our [http://spacemagic.io/tutorials/](To-do Tutorial)
+  * Dive into the Documentation
+  * Follow us on Twitter
 
 High-level Overview
 -------------------

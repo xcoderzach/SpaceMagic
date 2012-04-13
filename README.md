@@ -6,7 +6,8 @@ introductory blog post here.
 
 Installation
 ------------
-  To install SpaceMagic:
+
+To install SpaceMagic:
 
 ```
 mkdir my_project
@@ -15,12 +16,10 @@ npm install SpaceMagic
 spacemagic init my_project
 ```
 
-  Into your terminal
-
 Configure
 ---------
 
-  You need to have mongodb installed, if you don't, go here
+You need to have mongodb installed, if you don't, go here
 [http://www.mongodb.org/display/DOCS/Quickstart](MongoDB QuickStart Guide)
 
   If you're already running MongoDB on localhost on the default port, you're done.
@@ -43,4 +42,12 @@ spacemagic server
 
 Examples
 ========
-TBA
+
+[https://github.com/xcoderzach/SpaceMagicChatExample](Chat App)
+[https://github.com/xcoderzach/SpaceMagicTodoExample](Todo List App)
+
+Contributions
+=============
+
+Any and all contributions are welcome. Bug reports, feature requests, or
+anything else. Fork away!

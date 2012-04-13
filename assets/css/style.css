@@ -11,6 +11,10 @@ a {
   color: #BE2F33;
 }
 
+a:hover {
+  color: #BE2F33;
+}
+
 .superbig {
   font-size: 120px;
   line-height: 1;

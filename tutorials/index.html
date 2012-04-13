@@ -35,9 +35,6 @@
 <p>  We&#39;re going to go through the steps to build a Todo App with up and downvotes.
 
 </p>
-<p>  You can see a demo of the finished product here: <a href="">Todo Example</a>
-
-</p>
 <p>  We&#39;ll assume you have mongodb, node, and npm installed already and have mongo
 running on the default port on localhost.
 
@@ -45,7 +42,7 @@ running on the default port on localhost.
 <p>  First we need to get SpaceMagic installed, so we just run:
 
 </p>
-<pre><code>npm install -g spacemagic</code></pre>
+<pre><code>npm install -g SpaceMagic</code></pre>
 <p>w00t, that&#39;s it, now we&#39;ll initialize a new SpaceMagic app.
 
 </p>
@@ -60,23 +57,32 @@ npm modules we need to get our app up and running.
 If the thing is green that means bootstrap is up and running. w00t.
 
 </p>
-<p>  Lets start out by mocking up our application in html.  Since we&#39;re using LiveView
-all we have to do in order to have working templates is to write the semantic html
-we would have written anyway.
+<p>  Lets start out by mocking up our application in html.  Since we&#39;re using
+LiveView all we have to do in order to have working templates is to write the
+semantic html we would have written anyway.
 
 </p>
-<pre><code class="javascript">&lt;section&gt;
+<p><code>/assets/templates/tasks/list.html</code>
+</p>
+<pre><code class="HTML">&lt;section&gt;
   &lt;ul class = &quot;tasks&quot;&gt;
     &lt;li class = &quot;task&quot;&gt;
-      &lt;input type = &quot;checkbox&quot; class = &quot;done&quot;&gt;
-      &lt;div class = &quot;title&quot;&gt;&lt;/div&gt;
-      &lt;div class = &quot;votes&quot;&gt;0&lt;/div&gt;
-      &lt;div class = &quot;upVote&quot;&gt;&lt;/div&gt;
-      &lt;div class = &quot;downVote&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;votingArea&quot;&gt;
+        &lt;i class = &quot;upVote&quot;&gt;&lt;/i&gt;
+        &lt;div class = &quot;votes&quot;&gt;0&lt;/div&gt;
+        &lt;i class = &quot;downVote&quot;&gt;&lt;/i&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;titleContainer&quot;&gt;
+        &lt;div class = &quot;title&quot;&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;checkboxContainer&quot;&gt;
+        &lt;input type = &quot;checkbox&quot; class = &quot;done&quot;&gt;
+      &lt;/div&gt;
     &lt;/li&gt;
   &lt;/ul&gt;
   &lt;form id = &quot;newTaskForm&quot;&gt;
     &lt;input type = &quot;text&quot; name = &quot;task[title]&quot; /&gt;
+    &lt;input type = &quot;submit&quot; value=&quot;Add Task&quot;/&gt;
   &lt;/form&gt;
 &lt;/section&gt;</code></pre>
 <p>  That should probably be enough html to get our app started.
@@ -94,6 +100,8 @@ has three properties:
 <p>To define these properties on a model we use the <code>key</code> method. </p>
 </li>
 </ul>
+<p><code>/app/models/task.js</code>
+</p>
 <pre><code class="javascript">var Document = require(&quot;LiveDocument/lib/document&quot;)
 
 module.exports = Document.define(&quot;Task&quot;)
@@ -109,13 +117,18 @@ controllers which handles syncing the model to the template, the particular
 view we&#39;ll use is the list view, since we need to show a list of tasks.
 
 </p>
+<p><code>/app/views/tasks/list.js</code>
+</p>
 <pre><code class="javascript">var ListView = require(&quot;views/list_view&quot;) 
 
 module.exports = ListView.define(&quot;TaskListView&quot;)                                            
   .template(&quot;/templates/tasks/list.html&quot;)</code></pre>
-<p>Now we just need to connect the two together, so in application_controller.js we&#39;ll setup 
-the route &quot;/&quot; to load our view, 
+<p>Now we just need to connect the two together, so in application_controller.js
+we&#39;ll setup the route &quot;/&quot; to load our view. Feel free to delete preexisting
+boilerplate code, if it exists. 
 
+</p>
+<p><code>/app/controllers/application_controller.js</code>
 </p>
 <pre><code class="javascript">var TaskListView = require(&quot;../views/tasks/list&quot;)
   , Task = require(&quot;../models/task&quot;)
@@ -145,13 +158,14 @@ The form shouldn&#39;t work, neither do the checkbox or the up/downvote buttons.
 <p>We&#39;ll create a view to handle the new task form first
 
 </p>
+<p><code>/app/views/tasks/new.js</code>
+</p>
 <pre><code class="javascript">var View = require(&quot;views/view&quot;) 
-  , Task = require(&quot;../models/task&quot;)
-  , _ = require(&quot;underscore&quot;)
+  , Task = require(&quot;../../models/task&quot;)
 
 module.exports = View.define(&quot;NewTaskView&quot;)
   .action(&quot;submit #newTaskForm&quot;, function(event, element) {
-
+    event.preventDefault()
     var input = element.find(&quot;input[type=text]&quot;)
       , title = input.val()
 
@@ -160,11 +174,16 @@ module.exports = View.define(&quot;NewTaskView&quot;)
 <p>now we just have to append this view as a subview of our main view.
 
 </p>
+<p><code>/app/views/tasks/list.js</code>
+</p>
 <pre><code class="javascript">//add the require
-var NewTaskView = require(&quot;../veiws/tasks/new&quot;)
+var NewTaskView = require(&quot;./new&quot;)
+  , ListView = require(&quot;views/list_view&quot;) 
 
+module.exports = ListView.define(&quot;TaskListView&quot;)                                            
+  .template(&quot;/templates/tasks/list.html&quot;)
 //and make it a subview
-  .subView(&quot;#newTaskView&quot;, NewTaskView)</code></pre>
+  .subView(&quot;#newTaskForm&quot;, NewTaskView)</code></pre>
 <p>  By default a Form View saves the model on submit, so this is all we need
 for a basic create form.
 
@@ -172,11 +191,16 @@ for a basic create form.
 <p>  Now the last thing is to get the up and downvotes and checkboxes working.
 
 </p>
-<p>  So we&#39;ll create a single view file for each task in the collection, for simplicity
-we&#39;ll put it in the same file as the list view.
+<p>  So we&#39;ll create a single view for each task in the collection, for simplicity
+we&#39;ll put it at the top of the same file as the list view.
 
 </p>
-<pre><code class="javascript">var TaskView = ListView.define(&quot;TaskView&quot;)                                            
+<p><code>/app/views/tasks/list.js</code>
+</p>
+<pre><code class="javascript">var NewTaskView = require(&quot;./new&quot;)
+  , ListView = require(&quot;views/list_view&quot;) 
+//single task view
+var TaskView = ListView.define(&quot;TaskView&quot;)                                            
   .action(&quot;change input[type=checkbox]&quot;, function(event, element) {
     var done = element.is(&quot;:checked&quot;)
     this.model.set({ done: done })
@@ -191,18 +215,128 @@ we&#39;ll put it in the same file as the list view.
     var votes = this.model.get(&quot;votes&quot;)
     this.model.set({ votes: votes - 1 })
     this.model.save()
-  })</code></pre>
-<p>and then add it as the view for the single items in the task list.
+  })
+
+module.exports = ListView.define(&quot;TaskListView&quot;)                                            
+  .template(&quot;/templates/tasks/list.html&quot;)
+  .subView(&quot;#newTaskForm&quot;, NewTaskView)</code></pre>
+<p>and then add it as the view for the single items in the task list by pasting:
 
 </p>
-<pre><code class="javascript">  .singleView(TaskView)</code></pre>
-<p>And Blam, you have a fully real-time todo list with upvotes.
+<p><code>/app/views/tasks/list.js</code>
+</p>
+<pre><code class="javascript">var NewTaskView = require(&quot;./new&quot;)
+  , ListView = require(&quot;views/list_view&quot;) 
+//single task view
+var TaskView = ListView.define(&quot;TaskView&quot;)                                            
+  .action(&quot;change input[type=checkbox]&quot;, function(event, element) {
+    var done = element.is(&quot;:checked&quot;)
+    this.model.set({ done: done })
+    this.model.save()
+  })
+  .action(&quot;click .upVote&quot;, function(event, element) {
+    var votes = this.model.get(&quot;votes&quot;)
+    this.model.set({ votes: votes + 1 })
+    this.model.save()
+  }) 
+  .action(&quot;click .downVote&quot;, function(event, element) {
+    var votes = this.model.get(&quot;votes&quot;)
+    this.model.set({ votes: votes - 1 })
+    this.model.save()
+  })
+
+module.exports = ListView.define(&quot;TaskListView&quot;)                                            
+  .template(&quot;/templates/tasks/list.html&quot;)
+  .subView(&quot;#newTaskForm&quot;, NewTaskView)
+//add it as a singleView
+  .singleView(TaskView)</code></pre>
+<p>Finally, add the following to the end of your <code>/assets/less/style.less</code> if you want the list to look pretty.
+
+</p>
+<pre><code class="less">ul.tasks {
+  width: 415px;
+  height: 500px;
+  margin-left: 0px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+li.task {
+  float: left;
+  width: 415px;
+  margin-left: 0px;
+  padding-left: 5px;
+  list-style-type: none;
+}
+
+li:nth-child(2n) {
+  background-color: #FFFAFA;
+}
+
+.votingArea {
+  width: 15px;
+  float: left;
+  text-align: center;
+}
+
+.titleContainer {
+  width: 300px;
+  float: left;
+  margin-left: 20px;
+}
+
+.checkboxContainer {
+  width: 60px;
+  float: left;
+  margin-left: 20px;
+}
+
+.upVote {
+    background-image: url(&quot;../img/glyphicons-halflings.png&quot;);
+    background-position: -289px -96px;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 14px;
+    line-height: 14px;
+    vertical-align: text-top;
+    width: 14px;
+}
+
+.downVote {
+    background-image: url(&quot;../img/glyphicons-halflings.png&quot;);
+    background-position: -312px -96px;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 14px;
+    line-height: 14px;
+    vertical-align: text-top;
+    width: 14px;
+}
+input.done {
+margin-top: 21px;
+}
+
+.title {
+  margin-top: 15px;
+}
+
+form#newTaskForm {
+  margin: 0px 0px 18px 80px;
+}
+
+i {
+  cursor: pointer;
+}</code></pre>
+<p>And Blam, you have a fully real-time todo list with upvotes. If you&#39;ve had any
+problems, or just want to check out a completed version of the project, it&#39;s
+[<a href="https://github.com/xcoderzach/SpaceMagicTodoExample](available">https://github.com/xcoderzach/SpaceMagicTodoExample](available</a> from our GitHub
+repository).
 </p>
 
 
           </div>
           <div class="span5 offset1">
-            <h3>Styled, task-limited version of the tutorial app:</h3>
+            <h3>Open app in two windows to observe real-time operation:</h3>
             <iframe src="http://165.225.128.119/todo" frameborder="0" height="600px" width="415px" scrolling="no"></iframe>
             <p>NOTE: Not intended to be an example of good UX design.</p>
           </div>

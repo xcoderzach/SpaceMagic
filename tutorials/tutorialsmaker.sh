@@ -38,7 +38,7 @@ marked --gfm allthedocs.md >> index.html
 echo '
           </div>
           <div class="span5 offset1">
-            <h3>Styled, task-limited version of the tutorial app:</h3>
+            <h3>Open app in two windows to observe real-time operation:</h3>
             <iframe src="http://165.225.128.119/todo" frameborder="0" height="600px" width="415px" scrolling="no"></iframe>
             <p>NOTE: Not intended to be an example of good UX design.</p>
           </div>

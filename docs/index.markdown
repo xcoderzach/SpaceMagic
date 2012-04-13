@@ -49,8 +49,8 @@ High-level Overview
 
 SpaceMagic is an MV* framework. Its main components are:
 
-  * [LiveView](https://github.com/xcoderzach/LiveView) - A pure, semantic HTML-based templating language.
-  * [LiveDocument](https://github.com/xcoderzach/LiveDocument) - A real-time client-server isomorphic ODM.
+  * [LiveView](https://github.com/xcoderzach/LiveView) - A pure, semantic HTML-based templating language.  Just write the semantic html you would have written anyways.
+  * [LiveDocument](https://github.com/xcoderzach/LiveDocument) - A real-time client-server Object Document Mapper for mongodb.
   * [LiveController](https://github.com/xcoderzach/LiveController) - A tiny, client-side, pushState router. 
-  * [AssetPipeline](https://github.com/xcoderzach/AssetPipeline) - A static asset provider with support for minification, javascript modules, and caching.
+  * [AssetPipeline](https://github.com/xcoderzach/AssetPipeline) - A static asset provider with support for minification, javascript modules, minifcation and caching.
 

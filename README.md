@@ -42,8 +42,9 @@ spacemagic server
 Examples
 ========
 
-[https://github.com/xcoderzach/SpaceMagicChatExample](Chat App)
-[https://github.com/xcoderzach/SpaceMagicTodoExample](Todo List App)
+[Chat App](https://github.com/xcoderzach/SpaceMagicChatExample)
+
+[Todo List App](https://github.com/xcoderzach/SpaceMagicTodoExample)
 
 Licence
 =======
